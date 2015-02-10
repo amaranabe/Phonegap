@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+		<meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+
+
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+		<link rel="stylesheet" type="text/css" href="mystyle.css">
+		<script src="http://code.jquery.com/jquery-1.11.2.min.js"></script>
+		<script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+
+		<script>
+				var cantidad_total = "0";
+				var cantidad_actual = "0";
+				var path_actual = "";
+				var lista_tickets=[];// un ticket será una cantidad y un string de la ruta de una foto
+		</script>
+</head>
+<body onload="myFunction()">
+
+			<script>
+					function myFunction() {
+					    //alert("Page is loaded");
+					}
+
+					function actualizar_pagina_ppal()
+					{
+					document.getElementById("Mostrar_Cantidad").innerHTML =
+					"Total Amount Spent: " + cantidad_total;
+					}
+
+					function registrar_ticket(cantidad, path)
+					{
+					var ticket = [];
+					ticket ["cantidad"] = cantidad;
+					ticket ["path"] = path;
+
+					//alert( ticket["cantidad"] );
+					lista_tickets.push(ticket);
+
+					document.getElementById("Numero_tickets").innerHTML ="Number of registered Tickets: " + lista_tickets.length;
+					}
+		</script>
+<!--PAGINA 0: CARGUE PANTALLAZO-->
+
+<!--PAGINA 1: PRESENTACIÓN-->
+<div data-role="page" id="pageone">
+		<div data-role="header">
+		    <h1>Gastos</h1>
+		</div>
+
+   		<div data-role="main" class="ui-content">
+				<p id="Mostrar_Cantidad">Total gastado: 0 &#8364;</p>
+				<p id="Numero_tickets">Numero de Tickets registrados: 0</p>
+				<a href="#pagetwo" data-role="button" data-inline="true" data-theme="b" data-transition="fade">Inserta cantidad</a> 
+			
+		<!--	<div id="other">
+				Trigger the handler
+			</div> -->
+						
+			<script>
+				$( "#other" ).click(function() {
+					alert( "Handler for .click() called." );
+								});
+			</script>
+					
+		</div>
+
+		<div data-role="footer">
+			<h1>DW31 app</h1>
+		</div>
+</div> 
+<!--PAGINA 2-->
+<div data-role="page" id="pagetwo">
+		<div data-role="header">
+    		<h1>Calculador</h1>
+  		</div>
+
+   		<div data-role="main" class="ui-content">
+					<div id="Total_Amount_label"><div><p>Total acumulado: 0  &#8364;</p></div></div>
+					<div id="Amount_label"><div><p>Total ahora: 0  &#8364;</p></div></div>
+
+					<p>Introduce cantidad:</p>
+					<div class="container">
+						<div class="fila_tabla">
+							<div class="item"><button id="bt0">0</button></div>
+							<div class="item"><button id="bt1">1</button></div>
+							<div class="item"><button id="bt2">2</button></div>
+						</div>
+						<div class="fila_tabla">
+							<div class="item"><button id="bt3">3</button></div>
+							<div class="item"><button id="bt4">4</button></div>
+							<div class="item"><button id="bt5">5</button></div>
+						</div>
+						<div class="fila_tabla">
+							<div class="item"><button id="bt6">6</button></div>
+							<div class="item"><button id="bt7">7</button></div>
+							<div class="item"><button id="bt8">8</button></div>
+						</div>
+						<div class="fila_tabla">
+							<div class="item"><button id="bt9">9</button></div>
+							<div class="item"><button id="btcoma">,</button></div>
+							<div class="item"><button id="btneg">-</button></div>
+						</div>
+					</div>
+					
+					<button id="btdel" data-inline="true">Supr.</button> </br>
+					<button id="ok" data-inline="true" data-theme="b">Nuevo</button>
+					<button id="reset" data-inline="true" data-theme="b">C</button>
+					<button id="takephoto" data-inline="true" data-theme="b">Foto ticket</button>
+					<a href="#pageone" data-role="button" data-theme="b"  data-inline="true">Atrás</a>
+		</div>
+				  
+		<script>
+  
+			 for (i = 0; i <= 9; i++) {
+			   var button_name = "#bt"+i;
+				   $( button_name ).click(function() {
+				   
+								if (cantidad_actual !="0")
+									cantidad_actual = cantidad_actual + this.innerHTML;
+								else 
+									cantidad_actual = this.innerHTML;
+							
+								document.getElementById("Amount_label").innerHTML = "<div>Current Amount: " + cantidad_actual +  " &#8364;</div>";
+					});
+			}
+
+			$( "#btcoma" ).click(function() {
+			   
+							var n = cantidad_actual.indexOf('.'); 
+							
+							if (n==-1)
+							{	
+								cantidad_actual = cantidad_actual+".";
+								
+							}
+							document.getElementById("Amount_label").innerHTML = "<div>Current Amount: " + cantidad_actual +  " &#8364;</div>";
+			});
+
+			$( "#btneg" ).click(function() {
+			   
+			   
+							if (cantidad_actual.charAt(0) == "-")
+								cantidad_actual = cantidad_actual.substr(1, cantidad_actual.length -1) ;
+							else 
+								cantidad_actual = "-" + cantidad_actual;
+						
+							document.getElementById("Amount_label").innerHTML = "<div>Current Amount: " + cantidad_actual +  " &#8364;</div>";
+			});
+				
+			$( "#reset" ).click(function() {
+			   
+							cantidad_actual="0";
+							document.getElementById("Amount_label").innerHTML = "<div>Current Amount: " + cantidad_actual +  " &#8364;</div>";
+			});
+				
+			$( "#btdel" ).click(function() {
+			   
+							if (cantidad_actual.length>0) 
+							    cantidad_actual=cantidad_actual.substr(0, cantidad_actual.length -1);
+							document.getElementById("Amount_label").innerHTML = "<div>Current Amount: " + cantidad_actual +  " &#8364;</div>";
+			});
+				/*		$( "#bt0" ).click(function() {
+							alert( "Evento click del boton bt0" );
+							if (cantidad_actual !="0")
+								cantidad_actual = cantidad_actual + "0";
+							document.getElementById("Amount_label").innerHTML =
+			"<div>Current Amount: " + cantidad_actual +  " &#8364;</div>";
+				
+							
+										});
+										
+						$( "#bt1" ).click(function() {
+							if (cantidad_actual !="0")
+								cantidad_actual = cantidad_actual + "1";
+							else cantidad_actual = 1;
+							document.getElementById("Amount_label").innerHTML =
+			"<div>Current Amount: " + cantidad_actual  + " &#8364;</div>";
+									
+										});
+										
+						$( "#bt2" ).click(function() {
+							if (cantidad_actual !="0")
+								cantidad_actual = cantidad_actual + "2";
+							else cantidad_actual = 2;
+								
+							document.getElementById("Amount_label").innerHTML = "<div>Current Amount: " + cantidad_actual  + " &#8364;</div>";
+						});
+						$( "#bt3" ).click(function() {
+							if (cantidad_actual !="0")
+								cantidad_actual = cantidad_actual + "3";
+							else
+								cantidad_actual = 2;
+							document.getElementById("Amount_label").innerHTML = "<div>Current Amount: " + cantidad_actual  + " &#8364;</div>";
+						});
+						*/
+			$( "#ok" ).click(function() {
+						     		
+							var aux ;
+							
+							aux = parseFloat(cantidad_actual);
+							
+							aux = aux + parseFloat(cantidad_total) ;
+							
+							cantidad_total = aux.toString();
+							
+							document.getElementById("Total_Amount_label").innerHTML = "<div>Total Amount: " + cantidad_total  + " &#8364;</div>";
+							actualizar_pagina_ppal();
+							registrar_ticket(cantidad_actual, path_actual);
+							
+							cantidad_actual = 0;
+							document.getElementById("Amount_label").innerHTML ="<div>Current Amount: " + cantidad_actual  + " &#8364;</div>";
+			});
+
+		</script>
+
+		 <div data-role="footer">
+		    <h1>DW31 app</h1>
+		 </div>
+</div> 
+
+</body>
+</html>

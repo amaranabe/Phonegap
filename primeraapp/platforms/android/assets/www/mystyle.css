@@ -1,0 +1,12 @@
+.container {
+  
+}
+.fila_tabla {
+  display: table-row;
+}
+.item {
+  display: table-cell;
+}
+.item button {
+   display: table-row;
+}

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/platforms/android/CordovaLib/CordovaLib.iml" filepath="$PROJECT_DIR$/platforms/android/CordovaLib/CordovaLib.iml" />
+      <module fileurl="file://$PROJECT_DIR$/platforms/android/android.iml" filepath="$PROJECT_DIR$/platforms/android/android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/platforms/android/Primeraapp/app/src/androidTest/androidTest.iml" filepath="$PROJECT_DIR$/platforms/android/Primeraapp/app/src/androidTest/androidTest.iml" />
+      <module fileurl="file://$PROJECT_DIR$/platforms/android/Primeraapp/app/build/generated/source/buildConfig/buildConfig.iml" filepath="$PROJECT_DIR$/platforms/android/Primeraapp/app/build/generated/source/buildConfig/buildConfig.iml" />
+      <module fileurl="file://$PROJECT_DIR$/platforms/android/Primeraapp/app/src/main/main.iml" filepath="$PROJECT_DIR$/platforms/android/Primeraapp/app/src/main/main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/platforms/android/Primeraapp/app/build/generated/source/r/r.iml" filepath="$PROJECT_DIR$/platforms/android/Primeraapp/app/build/generated/source/r/r.iml" />
+      <module fileurl="file://$PROJECT_DIR$/platforms/android/Primeraapp/app/build/generated/source/buildConfig/test/test.iml" filepath="$PROJECT_DIR$/platforms/android/Primeraapp/app/build/generated/source/buildConfig/test/test.iml" />
+    </modules>
+  </component>
+</project>
+
