@@ -8,16 +8,6 @@
         <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
         
-        <!--Este link aitor lo tiene quitado y al final del codigo tiene lo siguiente:
-
-		<script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
-        <script type="text/javascript">
-            app.initialize();
-        </script>
-
-        -->
-
         <link rel="stylesheet" type="text/css" href="css/index.css" />
 
 
@@ -32,48 +22,105 @@
 				var path_actual = "";
 				var lista_tickets=[];// un ticket será una cantidad y un string de la ruta de una foto
 		</script>
-</head>
-<body>
 
-			<script>
+		<script>
 
 					function actualizar_pagina_ppal()
 					{
-					document.getElementById("Mostrar_Cantidad").innerHTML =
-					"Total Amount Spent: " + cantidad_total;
+						document.getElementById("Mostrar_Cantidad").innerHTML =
+						"Total Amount Spent: " + cantidad_total;
 					}
 
 					function registrar_ticket(cantidad, path)
 					{
-					var ticket = [];
-					ticket ["cantidad"] = cantidad;
-					ticket ["path"] = path;
+						var ticket = [];
+						ticket ["cantidad"] = cantidad;
+						ticket ["path"] = path;
 
-					//alert( ticket["cantidad"] );
-					lista_tickets.push(ticket);
+						//alert( ticket["cantidad"] );
+						lista_tickets.push(ticket);
 
-					document.getElementById("Numero_tickets").innerHTML ="Number of registered Tickets: " + lista_tickets.length;
+						document.getElementById("Numero_tickets").innerHTML ="Number of registered Tickets: " + lista_tickets.length;
 					}
 
 					//PARAR CAPTURAR FOTO
 					function capturephoto () {
-            navigator.camera.getPicture(onSuccess, onFail, {quality: 50,
-                destinationType: Camera.DestinationType.DATA_URL}
-                );            
-        }
+						  	sessionStorage.removeItem('imagepath');
+//						  	alert ("capturephoto");
+            				navigator.camera.getPicture(onPhotoDataSuccess, onFail, {quality: 50,
+                			destinationType: Camera.DestinationType.FILE_URI});            
+        			}
 
-        function onSuccess(imageData) {
-            var image = document.getElementById('myImage');
-            image.src = "data:image/jpeg;base64," + imageData;
-        }
+			       function onPhotoDataSuccess(imageURI) { 
+		        			// Uncomment to view the base64 encoded image data
+		        			// console.log(imageData);
 
-        function onFail(message) {
-            alert('Failed because: ' + message);
-        }
+		        			// Get image handle
+		        	       // var imgProfile = document.getElementById('imgProfile');
+
+//						  	alert ("onPhotoDataSuccess");
+		        			// Show the captured photo
+					        // The inline CSS rules are used to resize the image
+					        //
+					      //  imgProfile.src = imageURI;
 
 
+					        if(sessionStorage.isprofileimage==1){
+					            getLocation();
+					        }
+//					        alert("URI" + imageURI)
+					        movePic(imageURI);
+					}
 
+					// Called if something bad happens.
+					
+					function onFail(message) {
+					    alert('Failed because: ' + message);
+					}
+
+					function movePic(file){ 
+//						alert ("movePic" );
+					    window.resolveLocalFileSystemURI(file, resolveOnSuccess, resOnError); 
+					} 
+
+					//Callback function when the file system uri has been resolved
+					function resolveOnSuccess(entry){ 
+					    var d = new Date();
+					    var n = d.getTime();
+					    //new file name
+					    var newFileName = n + ".jpg";
+					    var myFolderApp = "MyAppFolder";
+
+						alert ("grabando fichero:" + newFileName);
+					    window.requestFileSystem(LocalFileSystem.PERSISTENT, 0, function(fileSys) {      
+					    //The folder is created if doesn't exist
+					    fileSys.root.getDirectory( myFolderApp,
+					                    {create:true, exclusive: false},
+					                    function(directory) {
+											alert ("mover a directorio: " + directory + " " + entry.fullPath);
+					                        entry.moveTo(directory, newFileName,  successMove, resOnError);
+					                    },
+					                    resOnError);
+					                    },
+					    resOnError);
+					}
+
+					//Callback function when the file has been moved successfully - inserting the complete path
+					function successMove(entry) {
+					    //Store imagepath in session for future use
+					    // like to store it in database
+					    sessionStorage.setItem('imagepath', entry.fullPath);
+//					    alert (entry.fullPath);
+					}
+
+					function resOnError(error) {
+					    alert(error.code);
+					}
 		</script>
+</head>
+<body>
+
+			
 <!--PAGINA 0: CARGUE PANTALLAZO-->
 
 <!--PAGINA 1: PRESENTACIÓN-->
@@ -86,16 +133,6 @@
 				<p id="Mostrar_Cantidad">Total gastado: 0 &#8364;</p>
 				<p id="Numero_tickets">Numero de Tickets registrados: 0</p>
 				<a href="#pagetwo" data-role="button" data-inline="true" data-theme="b" data-transition="fade">Inserta cantidad</a> 
-			
-		<!--	<div id="other">
-				Trigger the handler
-			</div> -->
-						
-			<script>
-				$( "#other" ).click(function() {
-					alert( "Handler for .click() called." );
-								});
-			</script>
 					
 		</div>
 
@@ -116,34 +153,36 @@
 					<p>Introduce cantidad:</p>
 					<div class="container">
 						<div class="fila_tabla">
-							<div class="item"><button id="bt0">0</button></div>
-							<div class="item"><button id="bt1">1</button></div>
-							<div class="item"><button id="bt2">2</button></div>
-						</div>
-						<div class="fila_tabla">
-							<div class="item"><button id="bt3">3</button></div>
-							<div class="item"><button id="bt4">4</button></div>
-							<div class="item"><button id="bt5">5</button></div>
-						</div>
-						<div class="fila_tabla">
-							<div class="item"><button id="bt6">6</button></div>
 							<div class="item"><button id="bt7">7</button></div>
 							<div class="item"><button id="bt8">8</button></div>
+							<div class="item"><button id="bt9">9</button></div>
 						</div>
 						<div class="fila_tabla">
-							<div class="item"><button id="bt9">9</button></div>
+							<div class="item"><button id="bt4">4</button></div>
+							<div class="item"><button id="bt5">5</button></div>
+							<div class="item"><button id="bt6">6</button></div>
+						</div>
+						<div class="fila_tabla">
+							<div class="item"><button id="bt1">1</button></div>
+							<div class="item"><button id="bt2">2</button></div>
+							<div class="item"><button id="bt3">3</button></div>
+						</div>
+						<div class="fila_tabla">
+							<div class="item"><button id="bt0">0</button></div>
 							<div class="item"><button id="btcoma">,</button></div>
 							<div class="item"><button id="btneg">-</button></div>
 						</div>
 					</div>
 					
-					<button id="btdel" data-inline="true">Supr.</button> </br>
-					<button id="ok" data-inline="true" data-theme="b">Nuevo</button>
-					<button id="reset" data-inline="true" data-theme="b">C</button>
+					<button id="btdel" data-inline="true">Supr.</button>
+					<button id="reset" data-inline="true">C</button></br>
+					<button id="ok" data-inline="true" data-theme="b">Añadir</button>
+
 					<button id="takephoto" data-inline="true" data-theme="b" onclick="capturephoto()">Foto ticket</button>
 					<a href="#pageone" data-role="button" data-theme="b"  data-inline="true">Atrás</a>
 		</div>
-				  
+
+
 		<script>
   
 			 for (i = 0; i <= 9; i++) {
@@ -195,40 +234,7 @@
 							document.getElementById("Amount_label").innerHTML = "<div>Current Amount: " + cantidad_actual +  " &#8364;</div>";
 			});
 
-				/*		$( "#bt0" ).click(function() {
-							alert( "Evento click del boton bt0" );
-							if (cantidad_actual !="0")
-								cantidad_actual = cantidad_actual + "0";
-							document.getElementById("Amount_label").innerHTML =
-			"<div>Current Amount: " + cantidad_actual +  " &#8364;</div>";
-				
-							
-										});
-										
-						$( "#bt1" ).click(function() {
-							if (cantidad_actual !="0")
-								cantidad_actual = cantidad_actual + "1";
-							else cantidad_actual = 1;
-							document.getElementById("Amount_label").innerHTML =
-			"<div>Current Amount: " + cantidad_actual  + " &#8364;</div>";
-									
-										});
-										
-						$( "#bt2" ).click(function() {
-							if (cantidad_actual !="0")
-								cantidad_actual = cantidad_actual + "2";
-							else cantidad_actual = 2;
-								
-							document.getElementById("Amount_label").innerHTML = "<div>Current Amount: " + cantidad_actual  + " &#8364;</div>";
-						});
-						$( "#bt3" ).click(function() {
-							if (cantidad_actual !="0")
-								cantidad_actual = cantidad_actual + "3";
-							else
-								cantidad_actual = 2;
-							document.getElementById("Amount_label").innerHTML = "<div>Current Amount: " + cantidad_actual  + " &#8364;</div>";
-						});
-						*/
+
 
 			$( "#ok" ).click(function() {
 						     		
@@ -249,6 +255,14 @@
 			});
 
 		</script>
+
+		<!--Inicializar plugin para acceso camera-->
+		<script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript">
+            app.initialize();
+        </script>
+
 
 		<div data-role="footer">
 		    <h1>DW31 app</h1>

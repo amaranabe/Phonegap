@@ -1,6 +1,15 @@
-.container {
-  
+
+#pagetwo, #pageone {
+  margin: auto;
+  background-color: green;
+  text-align: center;
 }
+
+.container {
+	text-align: center;
+	margin: 80px;
+}
+
 .fila_tabla {
   display: table-row;
 }
