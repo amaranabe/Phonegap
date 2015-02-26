@@ -1,8 +1,13 @@
 
 #pagetwo, #pageone {
   margin: auto;
-  background-color: green;
+  background-color: #63F0CD;
   text-align: center;
+}
+
+#marco {
+	background-color: #333;
+	color: #F9F9F9;
 }
 
 .container {
