@@ -2,8 +2,7 @@
 	var cantidad_actual = "0";
 	var path_actual = ""; // para guardar la dirección de la foto en la tarjeta SD
 	var lista_tickets=[];// array de tickets, donde un ticket será una cantidad y un string de la ruta de una foto
-	
-	
+		
 //PARAR CAPTURAR FOTO
 	function capturephoto () {
 			sessionStorage.removeItem('imagepath');
@@ -75,8 +74,6 @@
 	}
 	
 //CALCULADORA Y VARIOS
-
-	
 	function seleccionar(num) {
 	
 		if (num == '.')
