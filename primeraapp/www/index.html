@@ -37,7 +37,7 @@
 		    <h1>Gastos</h1>
 		</div>
 
-   		<div data-role="main" class="ui-content">
+   		<div id="body2" data-role="main" class="ui-content">
 				<p id="Mostrar_Cantidad">Gastos: 0 €</p>
 				<p id="Numero_tickets">Tickets: 0</p>
 				<a href="#pagetwo" data-role="button" data-inline="true" data-theme="b" data-transition="fade">Inserta cantidad</a>
@@ -45,22 +45,20 @@
 				<button id="newAccount" data-inline="true" data-theme="b" onclick="nuevosgastos()">Reiniciar</button>
 		</div>
 
-		<div class="marco" data-role="footer">
+		<div id="marco" data-role="footer">
 			<p>MyApp</p>
 		</div>
 </div> 
 <!--PAGINA 2: -->
 <div data-role="page" id="pagetwo">
-		<div class="marco" data-role="header">
-    		<h1>Calculador</h1>
+		<div id="marco" data-role="header">
+    		<h1>Calculando</h1>
   		</div>
 
-   		<div data-role="main" class="ui-content">
+   		<div id="body1" data-role="main" class="ui-content">
 					
 					<div id="Total_Amount_label">Total acumulado: 0 &#8364;</div>
 					<div id="Amount_label">Total ahora: 0 &#8364;</div>
-
-					<p>Introduce cantidad:</p>
 					<div class="container">
 						<div class="fila_tabla">
 							<div class="item"><button id="bt7" onclick="seleccionar('7')">7</button></div>
@@ -88,10 +86,10 @@
 					<button id="reset" data-inline="true" onclick="reset()">C</button></br>
 					<button id="add" data-inline="true" data-theme="b" onclick="add()">Añadir</button>
 
-					<button id="takephoto" data-inline="true" data-theme="b" onclick="capturephoto()">Foto ticket</button>
-					<a href="#pageone" data-role="button" data-theme="b"  data-inline="true">Atrás</a>
+					<button id="takephoto" data-inline="true" data-theme="b" onclick="capturephoto()">Foto ticket</button></br>
+					<a href="#pageone" data-role="button" data-theme="b"  data-inline="true">Inicio</a>
 		</div>
- 		<div class="marco" data-role="footer">
+ 		<div id="marco" data-role="footer">
 		    <h1>DW31 app</h1>
 		</div>
 </div> 

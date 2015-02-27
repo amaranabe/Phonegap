@@ -21,7 +21,7 @@
 			// The inline CSS rules are used to resize the image
 			//
 		  //  imgProfile.src = imageURI;
-
+			alert("grabando imagen con uri " + imageURI)
 			if(sessionStorage.isprofileimage==1){
 				getLocation();
 			}
@@ -32,11 +32,11 @@
 	// Called if something bad happens.
 	
 	function onFail(message) {
-		alert('Failed because: ' + message);
+		alert('[ERROR]  ' + message);
 	}
 	//mover la imagen temporal obtenida, a la tarjeta SD
 	function movePic(file){ 
-		window.resolveLocalFileSystemURI(file, resolveOnSuccess, resOnError); 
+		window.resolveLocalFileSystemURL(file, resolveOnSuccess, resOnError); 
 	} 
 	//Callback function when the file system uri has been resolved
 	function resolveOnSuccess(entry)
@@ -46,6 +46,7 @@
 		//new file name
 		var newFileName = n + ".jpg";
 		var myFolderApp = "MyAppFolder";
+		alert("grabando imagen con uri " + entry)
 
 		window.requestFileSystem(  LocalFileSystem.PERSISTENT, 0, function(fileSys) { 
 						 //The folder is created if doesn't exist
@@ -63,6 +64,7 @@
 		//Store imagepath in session for future use
 		// like to store it in database
 		// copiar la imagen a la sd
+		alert("grabando imagen: " + entry.fullPath)
 
 		sessionStorage.setItem('imagepath', entry.fullPath);
 	   // alert (entry.fullPath);

@@ -1,26 +1,39 @@
-
 #pagetwo, #pageone {
-  margin: auto;
-  background-color: #63F0CD;
+
+  background-color: #ADE0BA;
   text-align: center;
 }
 
+#body1, #body2 {
+  height: 490px;
+  width: 100%;
+}
+
+#body1 p {
+  margin: 5px 0px;
+}
+
 #marco {
-	background-color: #333;
+	background-color: #7D7757;
 	color: #F9F9F9;
 }
 
 .container {
-	text-align: center;
-	margin: 80px;
+  margin-top: 0px;
 }
 
 .fila_tabla {
   display: table-row;
+
 }
 .item {
   display: table-cell;
+  padding-left: 3px;
+  width: 30px;
+  height: 40px;
 }
 .item button {
-   display: table-row;
+  font-size: 40px;
+
+  display: table-row;
 }
