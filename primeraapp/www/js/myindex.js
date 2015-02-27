@@ -21,7 +21,9 @@
 			// The inline CSS rules are used to resize the image
 			//
 		  //  imgProfile.src = imageURI;
+
 			alert("grabando imagen con uri " + imageURI)
+
 			if(sessionStorage.isprofileimage==1){
 				getLocation();
 			}
@@ -46,6 +48,7 @@
 		//new file name
 		var newFileName = n + ".jpg";
 		var myFolderApp = "MyAppFolder";
+		
 		alert("grabando imagen con uri " + entry)
 
 		window.requestFileSystem(  LocalFileSystem.PERSISTENT, 0, function(fileSys) { 
@@ -64,6 +67,7 @@
 		//Store imagepath in session for future use
 		// like to store it in database
 		// copiar la imagen a la sd
+
 		alert("grabando imagen: " + entry.fullPath)
 
 		sessionStorage.setItem('imagepath', entry.fullPath);
