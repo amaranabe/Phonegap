@@ -1,3 +1,4 @@
+//VARIABLES
 	var cantidad_total = "0";
 	var cantidad_actual = "0";
 	var path_actual = ""; // para guardar la dirección de la foto en la tarjeta SD
@@ -16,7 +17,7 @@
 			// Get image handle
 		   // var imgProfile = document.getElementById('imgProfile');
 
-//						  	alert ("onPhotoDataSuccess");
+//alert ("onPhotoDataSuccess");
 			// Show the captured photo
 			// The inline CSS rules are used to resize the image
 			//
@@ -31,11 +32,11 @@
 			movePic(imageURI);
 	}
 	
-	// Called if something bad happens.
-	
+	// Llamada por si falla	
 	function onFail(message) {
 		alert('[ERROR]  ' + message);
 	}
+	
 	//mover la imagen temporal obtenida, a la tarjeta SD
 	function movePic(file){ 
 		window.resolveLocalFileSystemURL(file, resolveOnSuccess, resOnError); 
