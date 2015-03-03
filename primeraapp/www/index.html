@@ -33,19 +33,21 @@
 
 <!--PAGINA 1: INICIO-->
 <div data-role="page" id="pageone">
+
 		<div id="marco" data-role="header">
 		    <h1>Gastos</h1>
 		</div>
 
    		<div id="body2" data-role="main" class="ui-content">
-				<p id="Mostrar_Cantidad">Gastos: 0 €</p>
+   				<h1>Llevas gastado:</h1>
+				<h1 id="Mostrar_Cantidad">0 €</h1>
 				<p id="Numero_tickets">Tickets: 0</p>
 				<a href="#pagetwo" data-role="button" data-inline="true" data-theme="b" data-transition="fade">Inserta cantidad</a>
 				</br>
-				<button id="newAccount" data-inline="true" data-theme="b" onclick="nuevosgastos()">Reiniciar</button>
+				<button id="newAccount" data-inline="true" data-theme="b" onclick="nuevosGastos()">Reiniciar</button>
 		</div>
 
-		<div id="marco" data-role="footer">
+		<div id="pie" data-role="footer">
 			<p>MyApp</p>
 		</div>
 </div> 
@@ -57,9 +59,9 @@
 
    		<div id="body1" data-role="main" class="ui-content">
 					
-					<div id="Total_Amount_label">Total acumulado: 0 &#8364;</div>
+					<div id="Total_Amount_label"><h1>Total acumulado: 0 &#8364;</h1></div>
 					<div id="Amount_label">Total ahora: 0 &#8364;</div>				
-					<div class="container">
+					<div id="container">
 						<div class="fila_tabla">
 							<div class="item"><button id="bt7" onclick="seleccionar('7')">7</button></div>
 							<div class="item"><button id="bt8" onclick="seleccionar('8')">8</button></div>
@@ -81,16 +83,17 @@
 							<div class="item"><button id="btneg" onclick="seleccionar('-')">-</button></div>
 						</div>
 					</div>
-					
+
+					<div id="botonesbajos">
 					<button id="btdel" data-inline="true"onclick="suprimir()">Supr.</button>
 					<button id="reset" data-inline="true" onclick="reset()">C</button></br>
 					<button id="add" data-inline="true" data-theme="b" onclick="add()">Añadir</button>
 
-					<button id="takephoto" data-inline="true" data-theme="b" onclick="capturephoto()">Foto ticket</button></br>
+					<button id="takephoto" data-inline="true" data-theme="b" onclick="capturephoto()">Foto ticket</button>
 					<a href="#pageone" data-role="button" data-theme="b"  data-inline="true">Inicio</a>
+					</div>
 		</div>
 		
- 		<div id="marco" data-role="footer">
-</div> 
+
 </body>
 </html>

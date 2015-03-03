@@ -1,0 +1,39 @@
+#pagetwo, #pageone {
+
+  background-color: #ADE0BA;
+  text-align: center;
+}
+
+#body1, #body2 {
+  height: 490px;
+  width: 100%;
+}
+
+#body1 p {
+  margin: 5px 0px;
+}
+
+#marco {
+	background-color: #7D7757;
+	color: #F9F9F9;
+}
+
+.container {
+  margin-top: 0px;
+}
+
+.fila_tabla {
+  display: table-row;
+
+}
+.item {
+  display: table-cell;
+  padding-left: 3px;
+  width: 30px;
+  height: 40px;
+}
+.item button {
+  font-size: 40px;
+
+  display: table-row;
+}

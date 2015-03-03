@@ -1,8 +1,8 @@
 //VARIABLES
 	var cantidad_total = "0";
 	var cantidad_actual = "0";
-	var path_actual = ""; // para guardar la direcciÛn de la foto en la tarjeta SD
-	var lista_tickets=[];// array de tickets, donde un ticket ser· una cantidad y un string de la ruta de una foto
+	//var path_actual = ""; //para guardar la direcci√≥n de la foto en la tarjeta SD
+	//var lista_tickets=[];// array de tickets, donde un ticket ser√° una cantidad y un string de la ruta de una foto
 		
 //PARAR CAPTURAR FOTO
 	function capturephoto () {
@@ -22,7 +22,6 @@
 			// The inline CSS rules are used to resize the image
 			//
 		  //  imgProfile.src = imageURI;
-
 			alert("grabando imagen con uri " + imageURI)
 
 			if(sessionStorage.isprofileimage==1){
@@ -93,7 +92,7 @@
 			{	
 				cantidad_actual = cantidad_actual+".";					
 			}
-		
+	
 		}
 		else if (num == '-')
 		{
@@ -132,7 +131,7 @@
 			cantidad_actual='0';
 		}
 		else {
-			//metodo substr devuelve un substring del string, y le pasamos posiciÛn y longitud.
+			//metodo substr devuelve un substring del string, y le pasamos posici√≥n y longitud.
 			cantidad_actual=cantidad_actual.substr(0, cantidad_actual.length -1);
 		}
 		document.getElementById("Amount_label").innerHTML = "Total ahora: " + cantidad_actual +  " &#8364;";
@@ -140,26 +139,26 @@
 	
 	function add() 
 	{
-		// vamos a introducir una nueva cantidad cuando pulsemos al botÛn aÒadir		
+		// vamos a introducir una nueva cantidad cuando pulsemos al bot√≥n a√±adir		
 		var aux ;
 		
 		cantidad_total =  parseFloat(cantidad_actual) + parseFloat(cantidad_total) ;			
 		document.getElementById("Total_Amount_label").innerHTML = "Total acumulado: " + cantidad_total  + " &#8364;";
-		actualizar_pagina_ppal();
-		registrar_ticket(cantidad_actual, path_actual);
+		actualizarPaginaPpal();
+		registrarTicket(cantidad_actual, path_actual);
 		
 		cantidad_actual = 0;
 		document.getElementById("Amount_label").innerHTML ="Total ahora: " + cantidad_actual  + " &#8364;";
 	}
-
+actualizarPaginaPpal
 	
-	function actualizar_pagina_ppal()
+	function actualizarPaginaPpal()
 	{
 		document.getElementById("Mostrar_Cantidad").innerHTML =
 		"Gastos: " + cantidad_total + " &#8364;";
 	}
 
-	function registrar_ticket(cantidad, path)
+	function registrarTicket(cantidad, path)
 		{
 		var ticket = [];
 		ticket ["cantidad"] = cantidad;
@@ -171,27 +170,26 @@
 		document.getElementById("Numero_tickets").innerHTML ="Tickets: " + lista_tickets.length;
 	}
 	
-	//MÈtodo para vaciar el array de tickets
-	function vaciar_lista_tickets()
+	//M√©todo para vaciar el array de tickets
+	function vaciarListaTickets()
 	{
 		lista_tickets=[];
 		//lista_tickets.length = 0
 		document.getElementById("Numero_tickets").innerHTML ="Tickets: " + lista_tickets.length;
 	}
 	
-	function mostrar_lista_tickets()
+	function mostrarListaTickets()
 	{
-		alert("Lista de tickets hata ahora");	
-								
+		alert("Lista de tickets hasta ahora");							
 	}
 	
-	function nuevosgastos () {
+	function nuevosGastos () {
 		//-- Nueva cuenta, vaciamos todos los datos o ponemos a 0 las variables para volver a empezar --//
 		cantidad_total = "0";
 		
 		document.getElementById("Total_Amount_label").innerHTML = "Total acumulado: " + cantidad_total  + " &#8364;";
-		actualizar_pagina_ppal();
-		vaciar_lista_tickets();
+		actualizarPaginaPpal();
+		vaciarListaTickets();
 		cantidad_actual = 0;
 		document.getElementById("Amount_label").innerHTML ="Total ahora: " + cantidad_actual  + " &#8364;";
 	}

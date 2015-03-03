@@ -5,8 +5,10 @@
 }
 
 #body1, #body2 {
-  height: 490px;
-  width: 100%;
+    text-align: center;
+
+    width: 100%;
+    height: 100%;
 }
 
 #body1 p {
@@ -14,26 +16,58 @@
 }
 
 #marco {
+  margin-top: 0%;
 	background-color: #7D7757;
 	color: #F9F9F9;
 }
 
-.container {
-  margin-top: 0px;
+#Total_Amount_label, #Amount_label {
+  font-weight: 20px;
+}
+
+#container {
+ left:10%;
+ width:80%;
+ height:55%;
+ top: 20%;
+ position:absolute;
+ text-align:center;
 }
 
 .fila_tabla {
   display: table-row;
-
+  display:inline-block;
 }
+
 .item {
   display: table-cell;
-  padding-left: 3px;
-  width: 30px;
-  height: 40px;
-}
-.item button {
-  font-size: 40px;
+  padding-left: 4px;
 
+}
+
+.item button {
+  font-size: 30px;
   display: table-row;
+}
+
+#bt1, #bt2, #bt3, #bt4, #bt5, #bt6, #bt7, #bt8, #bt9, #bt0, #btcoma, #btneg {
+    width: 67px;
+    height: 72px;
+    margin: 3px;
+
+}
+
+#reset, #btdel {
+      height: 55px;
+      font-weight: 20px;
+}
+#botonesbajos {
+
+margin-top: 100%;
+}
+
+#pie {
+  margin-top: 71%;
+  background-color: #7D7757;
+  color: #F9F9F9;
 }
