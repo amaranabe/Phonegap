@@ -1,8 +1,8 @@
 //VARIABLES
 	var cantidad_total = "0";
 	var cantidad_actual = "0";
-	//var path_actual = ""; //para guardar la dirección de la foto en la tarjeta SD
-	//var lista_tickets=[];// array de tickets, donde un ticket será una cantidad y un string de la ruta de una foto
+	var path_actual = ""; //para guardar la dirección de la foto en la tarjeta SD
+	var lista_tickets=[];// array de tickets, donde un ticket será una cantidad y un string de la ruta de una foto
 		
 //PARAR CAPTURAR FOTO
 	function capturephoto () {
@@ -11,23 +11,11 @@
 			destinationType: Camera.DestinationType.FILE_URI});            
 	}
 	function onPhotoDataSuccess(imageURI) { 
-			// Uncomment to view the base64 encoded image data
-			// console.log(imageData);
-
-			// Get image handle
-		   // var imgProfile = document.getElementById('imgProfile');
-
-//alert ("onPhotoDataSuccess");
-			// Show the captured photo
-			// The inline CSS rules are used to resize the image
-			//
-		  //  imgProfile.src = imageURI;
-			alert("grabando imagen con uri " + imageURI)
-
+			
 			if(sessionStorage.isprofileimage==1){
 				getLocation();
 			}
-//					        alert("URI" + imageURI)
+
 			movePic(imageURI);
 	}
 	
@@ -49,8 +37,6 @@
 		var newFileName = n + ".jpg";
 		var myFolderApp = "MyAppFolder";
 		
-		alert("grabando imagen con uri " + entry)
-
 		window.requestFileSystem(  LocalFileSystem.PERSISTENT, 0, function(fileSys) { 
 						 //The folder is created if doesn't exist
 						 fileSys.root.getDirectory( myFolderApp,
@@ -67,11 +53,7 @@
 		//Store imagepath in session for future use
 		// like to store it in database
 		// copiar la imagen a la sd
-
-		alert("grabando imagen: " + entry.fullPath)
-
 		sessionStorage.setItem('imagepath', entry.fullPath);
-	   // alert (entry.fullPath);
 		path_actual=entry.fullPath;
 	}
 
@@ -82,46 +64,36 @@
 //CALCULADORA Y VARIOS
 	function seleccionar(num) {
 	
-		if (num == '.')
-		{
+		if (num == '.') {
 		// buscar un punto en el string de la cantidad actual
 			var n = cantidad_actual.indexOf('.'); 
 			
-			// si no hay ningun punto (n==-1) entonces puedo poner '.' de decimales		
-			if (n==-1)
-			{	
+			// si no hay ningun punto, devuelve -1, entonces puedo poner '.' de decimales		
+			if (n==-1) {	
 				cantidad_actual = cantidad_actual+".";					
 			}
-	
 		}
-		else if (num == '-')
-		{
+		else if (num == '-') {
 		
 					if (cantidad_actual.charAt(0) == "-")
+						//metodo substr devuelve un substring del string, y le pasamos posición y longitud.
 						cantidad_actual = cantidad_actual.substr(1, cantidad_actual.length -1) ;
 					else 
 						cantidad_actual = "-" + cantidad_actual;
 		}
-		else
-		{				
-			if (cantidad_actual != "0" )
-			{
-				
+		else {
+			if (cantidad_actual != "0" ) {				
 				cantidad_actual = cantidad_actual + num;
 			}
-			else
-			{
-			
+			else {			
 				cantidad_actual = num;
 			}
 		}
-		var texto_aux = "Total ahora: " + cantidad_actual +  " &#8364;";
-						
-		document.getElementById("Amount_label").innerHTML = texto_aux;
+
+		document.getElementById("Amount_label").innerHTML =  "Total ahora: " + cantidad_actual +  " &#8364;";	
 	}
 	
-	function reset() 
-	{
+	function reset() {
 		cantidad_actual="0";
 		document.getElementById("Amount_label").innerHTML = "Total ahora: " + cantidad_actual +  " &#8364;";
 	}
@@ -136,13 +108,22 @@
 		}
 		document.getElementById("Amount_label").innerHTML = "Total ahora: " + cantidad_actual +  " &#8364;";
 	}
+
+	//rellena el array lista_ticket
+	function registrarTicket(cantidad, path) {
+		var ticket = [];
+		ticket ["cantidad"] = cantidad;
+		ticket ["path"] = path;
+
+		lista_tickets.push(ticket);
+						
+		document.getElementById("Numero_tickets").innerHTML ="Tickets: " + lista_tickets.length;
+	}
 	
-	function add() 
-	{
+	function add() {
+
 		// vamos a introducir una nueva cantidad cuando pulsemos al botón añadir		
-		var aux ;
-		
-		cantidad_total =  parseFloat(cantidad_actual) + parseFloat(cantidad_total) ;			
+		cantidad_total =  parseFloat(cantidad_actual) + parseFloat(cantidad_total) ;	
 		document.getElementById("Total_Amount_label").innerHTML = "Total acumulado: " + cantidad_total  + " &#8364;";
 		actualizarPaginaPpal();
 		registrarTicket(cantidad_actual, path_actual);
@@ -150,41 +131,20 @@
 		cantidad_actual = 0;
 		document.getElementById("Amount_label").innerHTML ="Total ahora: " + cantidad_actual  + " &#8364;";
 	}
-actualizarPaginaPpal
 	
-	function actualizarPaginaPpal()
-	{
-		document.getElementById("Mostrar_Cantidad").innerHTML =
-		"Gastos: " + cantidad_total + " &#8364;";
+	function actualizarPaginaPpal() {
+		document.getElementById("Mostrar_Cantidad").innerHTML =cantidad_total + " &#8364;";
 	}
 
-	function registrarTicket(cantidad, path)
-		{
-		var ticket = [];
-		ticket ["cantidad"] = cantidad;
-		ticket ["path"] = path;
-
-		//alert( ticket["cantidad"] );
-		lista_tickets.push(ticket);
-
-		document.getElementById("Numero_tickets").innerHTML ="Tickets: " + lista_tickets.length;
-	}
-	
 	//Método para vaciar el array de tickets
-	function vaciarListaTickets()
-	{
+	function vaciarListaTickets() {
 		lista_tickets=[];
 		//lista_tickets.length = 0
 		document.getElementById("Numero_tickets").innerHTML ="Tickets: " + lista_tickets.length;
 	}
-	
-	function mostrarListaTickets()
-	{
-		alert("Lista de tickets hasta ahora");							
-	}
-	
+
+	//-- Nueva cuenta, ponemos 0 las variables para volver a empezar --//
 	function nuevosGastos () {
-		//-- Nueva cuenta, vaciamos todos los datos o ponemos a 0 las variables para volver a empezar --//
 		cantidad_total = "0";
 		
 		document.getElementById("Total_Amount_label").innerHTML = "Total acumulado: " + cantidad_total  + " &#8364;";
