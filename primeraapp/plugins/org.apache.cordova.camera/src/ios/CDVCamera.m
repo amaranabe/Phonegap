@@ -167,11 +167,9 @@ static NSString* toBase64(NSData* data) {
             weakSelf.hasPendingOperation = NO;
 
         } else {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [weakSelf.viewController presentViewController:cameraPicker animated:YES completion:^{
-                    weakSelf.hasPendingOperation = NO;
-                }];
-            });
+            [weakSelf.viewController presentViewController:cameraPicker animated:YES completion:^{
+                weakSelf.hasPendingOperation = NO;
+            }];
         }
     }];
 }
@@ -227,7 +225,7 @@ static NSString* toBase64(NSData* data) {
         UIImagePickerController* cameraPicker = (UIImagePickerController*)navigationController;
         
         if(![cameraPicker.mediaTypes containsObject:(NSString*)kUTTypeImage]){
-            [viewController.navigationItem setTitle:NSLocalizedString(@"Videos", nil)];
+            [viewController.navigationItem setTitle:NSLocalizedString(@"Videos title", nil)];
         }
     }
 }

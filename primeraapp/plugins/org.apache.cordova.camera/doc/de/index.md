@@ -19,35 +19,25 @@
 
 # org.apache.cordova.camera
 
-Dieses Plugin definiert eine globale `navigator.camera`-Objekt, das eine API für Aufnahmen und für die Auswahl der Bilder aus dem System-Image-Library bietet.
-
-Obwohl das Objekt mit der globalen Gültigkeitsbereich `navigator` verbunden ist, steht es nicht bis nach dem `Deviceready`-Ereignis.
-
-    document.addEventListener("deviceready", onDeviceReady, false);
-    function onDeviceReady() {
-        console.log(navigator.camera);
-    }
-    
-
-## Installation
+Dieses Plugin stellt eine API für Aufnahmen und für die Auswahl der Bilder aus dem System-Image-Library.
 
     cordova plugin add org.apache.cordova.camera
     
 
 ## navigator.camera.getPicture
 
-Nimmt ein Foto mit der Kamera, oder ein Foto aus dem Gerät Bildergalerie abgerufen. Das Bild wird an den Erfolg-Rückruf als base64-codierte `String` oder als URI für die Image-Datei übergeben. Die Methode selbst gibt ein `CameraPopoverHandle`-Objekt, das verwendet werden kann, um die Datei-Auswahl-Popover neu zu positionieren.
+Nimmt ein Foto mit der Kamera, oder ein Foto aus dem Gerät Bildergalerie abgerufen. Das Bild wird an den Erfolg-Rückruf als eine base64-codierte übergeben `String` , oder als den URI für die Image-Datei. Die Methode selbst gibt ein `CameraPopoverHandle` -Objekt, das verwendet werden kann, um die Datei-Auswahl-Popover neu zu positionieren.
 
     navigator.camera.getPicture( cameraSuccess, cameraError, cameraOptions );
     
 
 ### Beschreibung
 
-Die `camera.getPicture`-Funktion öffnet das Gerät Standard-Kamera-Anwendung, die Benutzern ermöglicht, Bilder ausrichten. Dieses Verhalten tritt in der Standardeinstellung, wenn `Camera.sourceType` `Camera.PictureSourceType.CAMERA` entspricht. Sobald der Benutzer die Fotoschnäpper, die Kameraanwendung geschlossen wird und die Anwendung wird wiederhergestellt.
+Die `camera.getPicture` -Funktion öffnet das Gerät Standard-Kamera-Anwendung, die Benutzern ermöglicht, Bilder ausrichten. Dieses Verhalten tritt standardmäßig, wenn `Camera.sourceType` gleich `Camera.PictureSourceType.CAMERA` . Sobald der Benutzer die Fotoschnäpper, die Kameraanwendung geschlossen wird und die Anwendung wird wiederhergestellt.
 
-Wenn `Camera.sourceType` `Camera.PictureSourceType.PHOTOLIBRARY` oder `Camera.PictureSourceType.SAVEDPHOTOALBUM` ist, dann wird ein Dialogfeld angezeigt, das Benutzern ermöglicht, ein vorhandenes Bild auszuwählen. Die `camera.getPicture`-Funktion gibt ein `CameraPopoverHandle`-Objekt, das verwendet werden kann, um die Bild-Auswahl-Dialog, z. B. beim ändert sich der Orientierung des Geräts neu positionieren.
+Wenn `Camera.sourceType` ist `Camera.PictureSourceType.PHOTOLIBRARY` oder `Camera.PictureSourceType.SAVEDPHOTOALBUM` , dann ein Dialog-Displays, die Benutzern ermöglicht, ein vorhandenes Bild auszuwählen. Die `camera.getPicture` Funktion gibt ein `CameraPopoverHandle` -Objekt, das verwendet werden kann, um den Bild-Auswahl-Dialog, zum Beispiel beim ändert sich der Orientierung des Geräts neu positionieren.
 
-Der Rückgabewert wird an die `cameraSuccess`-Callback-Funktion in einem der folgenden Formate, je nach dem angegebenen `cameraOptions` gesendet:
+Der Rückgabewert wird gesendet, um die `cameraSuccess` Callback-Funktion in einem der folgenden Formate, je nach dem angegebenen `cameraOptions` :
 
 *   A `String` mit dem base64-codierte Foto-Bild.
 
@@ -63,7 +53,7 @@ Sie können tun, was Sie wollen, mit dem codierten Bildes oder URI, zum Beispiel
 
  [1]: http://brianleroux.github.com/lawnchair/
 
-**Hinweis**: Fotoauflösung auf neueren Geräten ist ganz gut. Fotos aus dem Gerät Galerie ausgewählt sind nicht zu einer niedrigeren Qualität herunterskaliert, selbst wenn ein `Qualität`-Parameter angegeben wird. Um Speicherprobleme zu vermeiden, legen Sie `Camera.destinationType` auf `FILE_URI` statt `DATA_URL`.
+**Hinweis**: Fotoauflösung auf neueren Geräten ist ganz gut. Fotos aus dem Gerät Galerie ausgewählt sind nicht zu einer niedrigeren Qualität herunterskaliert auch wenn ein `quality` -Parameter angegeben wird. Um Speicherprobleme zu vermeiden, legen Sie `Camera.destinationType` auf `FILE_URI` statt`DATA_URL`.
 
 ### Unterstützte Plattformen
 
@@ -104,11 +94,9 @@ Kamera-Plugin ist derzeit implementiert mithilfe von [Web-Aktivitäten][2].
 
 ### iOS Macken
 
-Einschließlich einer JavaScript-`alert()` entweder Rückruffunktionen kann Probleme verursachen. Wickeln Sie die Warnung innerhalb eine `setTimeout()` erlauben die iOS-Bild-Picker oder Popover vollständig zu schließen, bevor die Warnung angezeigt:
+Darunter eine JavaScript `alert()` entweder des Rückrufs Funktionen können Probleme verursachen. Wickeln Sie die Warnung innerhalb einer `setTimeout()` erlauben die iOS-Bild-Picker oder Popover vollständig zu schließen, bevor die Warnung angezeigt:
 
-    setTimeout(function() {
-        // do your thing here!
-    }, 0);
+    setTimeout(function() {/ / Mach dein Ding hier!}, 0);
     
 
 ### Windows Phone 7 Macken
@@ -117,7 +105,7 @@ Die native Kameraanwendung aufrufen, während das Gerät via Zune angeschlossen 
 
 ### Tizen Macken
 
-Tizen unterstützt nur ein `DestinationType` von `Camera.DestinationType.FILE_URI` und ein `SourceType` von `Camera.PictureSourceType.PHOTOLIBRARY`.
+Tizen unterstützt nur eine `destinationType` der `Camera.DestinationType.FILE_URI` und eine `sourceType` von`Camera.PictureSourceType.PHOTOLIBRARY`.
 
 ### Beispiel
 
@@ -156,15 +144,7 @@ Nehmen Sie ein Foto und rufen Sie das Bild-Datei-Speicherort:
 
 Optionale Parameter die Kameraeinstellungen anpassen.
 
-    { quality : 75,
-      destinationType : Camera.DestinationType.DATA_URL,
-      sourceType : Camera.PictureSourceType.CAMERA,
-      allowEdit : true,
-      encodingType: Camera.EncodingType.JPEG,
-      targetWidth: 100,
-      targetHeight: 100,
-      popoverOptions: CameraPopoverOptions,
-      saveToPhotoAlbum: false };
+    {Qualität: 75, DestinationType: Camera.DestinationType.DATA_URL, SourceType: Camera.PictureSourceType.CAMERA, AllowEdit: stimmt, EncodingType: Camera.EncodingType.JPEG, TargetWidth: 100, TargetHeight: 100, PopoverOptions: CameraPopoverOptions, SaveToPhotoAlbum: false};
     
 
 ### Optionen
@@ -302,7 +282,7 @@ Optionale Parameter die Kameraeinstellungen anpassen.
 
 ## CameraError
 
-onError-Callback-Funktion, die eine Fehlermeldung bereitstellt.
+OnError-Callback-Funktion, die eine Fehlermeldung bereitstellt.
 
     function(message) {
         // Show a helpful message
@@ -315,7 +295,7 @@ onError-Callback-Funktion, die eine Fehlermeldung bereitstellt.
 
 ## cameraSuccess
 
-onSuccess Callback-Funktion, die die Bilddaten bereitstellt.
+OnSuccess Callback-Funktion, die die Bilddaten bereitstellt.
 
     function(imageData) {
         // Do something with the image
@@ -338,7 +318,7 @@ onSuccess Callback-Funktion, die die Bilddaten bereitstellt.
 
 ## CameraPopoverHandle
 
-Ein Handle für das Dialogfeld "Popover" erstellt von `navigator.camera.getPicture`.
+Ein Handle für das Dialogfeld "Popover" erstellt von`navigator.camera.getPicture`.
 
 ### Methoden
 
@@ -375,12 +355,7 @@ Legen Sie die Position von der Popover.
 
 nur iOS-Parametern, die Anker-Element Lage und Pfeil Richtung der Popover angeben, bei der Auswahl von Bildern aus einem iPad Bibliothek oder Album.
 
-    { x : 0,
-      y :  32,
-      width : 320,
-      height : 480,
-      arrowDir : Camera.PopoverArrowDirection.ARROW_ANY
-    };
+    {X: 0, y: 32, Breite: 320, Höhe: 480, ArrowDir: Camera.PopoverArrowDirection.ARROW_ANY};
     
 
 ### CameraPopoverOptions
@@ -389,11 +364,11 @@ nur iOS-Parametern, die Anker-Element Lage und Pfeil Richtung der Popover angebe
 
 *   **y**: y Pixelkoordinate des Bildschirmelement auf dem der Popover zu verankern. *(Anzahl)*
 
-*   **width**: Breite in Pixeln, das Bildschirmelement auf dem der Popover zu verankern. *(Anzahl)*
+*   **Breite**: Breite in Pixeln, das Bildschirmelement auf dem der Popover zu verankern. *(Anzahl)*
 
-*   **height**: Höhe in Pixeln, das Bildschirmelement auf dem der Popover zu verankern. *(Anzahl)*
+*   **Höhe**: Höhe in Pixeln, das Bildschirmelement auf dem der Popover zu verankern. *(Anzahl)*
 
-*   **arrowDir**: Richtung der Pfeil auf der Popover zeigen sollte. Im Sinne `Camera.PopoverArrowDirection` *(Anzahl)*
+*   **ArrowDir**: Richtung der Pfeil auf der Popover zeigen sollte. Im Sinne `Camera.PopoverArrowDirection` *(Anzahl)*
     
             Camera.PopoverArrowDirection = {
                 ARROW_UP : 1,        // matches iOS UIPopoverArrowDirection constants
@@ -406,7 +381,7 @@ nur iOS-Parametern, die Anker-Element Lage und Pfeil Richtung der Popover angebe
 
 Beachten Sie, dass die Größe der Popover ändern kann, um die Richtung des Pfeils und Ausrichtung des Bildschirms anzupassen. Achten Sie darauf, um Orientierung zu berücksichtigen, wenn Sie den Anker-Element-Speicherort angeben.
 
-## navigator.camera.cleanup
+## Navigator.Camera.Cleanup
 
 Entfernt Mittelstufe Fotos von der Kamera aus der vorübergehenden Verwahrung genommen.
 
@@ -415,7 +390,7 @@ Entfernt Mittelstufe Fotos von der Kamera aus der vorübergehenden Verwahrung ge
 
 ### Beschreibung
 
-Fortgeschrittene Image-Dateien, die in vorübergehender Verwahrung gehalten werden, nach dem Aufruf von `camera.getPicture` entfernt. Gilt nur wenn der Wert von `Camera.sourceType` gleich `Camera.PictureSourceType.CAMERA` und `Camera.destinationType` gleich `Camera.DestinationType.FILE_URI`.
+Entfernt Mittelstufe Image-Dateien, die nach der Berufung in vorübergehender Verwahrung gehalten werden `camera.getPicture` . Gilt nur, wenn der Wert des `Camera.sourceType` ist gleich `Camera.PictureSourceType.CAMERA` und der `Camera.destinationType` entspricht`Camera.DestinationType.FILE_URI`.
 
 ### Unterstützte Plattformen
 
