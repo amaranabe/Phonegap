@@ -1,0 +1,115 @@
+#paginaevento, #paginacocina, #consumoproductos, #paginafactura {
+    text-align: left;
+}
+
+div {
+    text-shadow: 0px 1px 0px #6C6A6A;
+}
+
+#consumosociedad, #consumoproductos, #factura {
+  position: center;
+  font-weight: bold;
+  background-color: #A41BAE;
+}
+#login{
+  position: center;
+  background-image: url(imagen.jpg);
+  background-position: center;
+  background-attachment: fixed;
+}
+
+#marco0, #marco1, #marco2, #marco3 {
+  
+  text-align: center;
+  margin-top: 0%;
+  background-color:#2C1F81;
+  color: #F9F9F9;
+}
+
+#titulodatos, #titulococina, #tituloporpersona, #titulovinos, #titulocavas, #titulolicores, #titulorefrescos, #titulocafes{
+  text-align: center;
+}
+
+#tablacomensales, #datos, #porpersona, #vinos, #licores, #cafes, #datosfactura {
+  position: center;
+  background-color: #B970BE;
+}
+
+#porpersona, #datos, #cocina, #cavas, #refrescos{
+  position: center;
+  background-color: #B970BE;
+  margin: 20px 20px 0 20px;
+  padding-right: 0px;
+  border-radius: 10px;
+}
+
+#btnsiguiente, #btnrealizarfactura,  {
+  position: center;
+  text-align: center;
+  margin: 0 auto;
+}
+
+/* ESTILOS PAGINA COCINA */
+
+.bloquescocina {
+  width: 100%;
+  height: 48px;
+  padding-top: 10px;
+  padding-right: 0px;
+}
+
+.bloquescocina p, .bloquescocina label {
+    width: 40%;
+    font-size: 15px;
+    margin: 0.5em 0px;
+}
+
+.enlinea {
+    float: left;
+    display: inline;
+    width: 54px;
+    padding-left: 15px;
+    text-align: left;
+}
+
+.enlineaboton {
+  float: left;
+  margin-left: -75px;
+  margin-top: -10px;
+  width: 22%;
+  padding-right: 0px;
+}
+
+.boton {
+  width: 20%;
+}
+
+#porpersona table{
+  margin: 20px;
+}
+
+/* ESTILOS PAGINA EVENTO */
+
+#tablaturno td {
+  width: 90px;
+  text-align: left;
+}
+
+#tablaturno  {
+  width: 90px;
+  text-align: left;
+}
+
+.ui-li-static.ui-collapsible > .ui-collapsible-heading {
+    margin: 0;
+}
+.ui-li-static.ui-collapsible {
+    padding: 0;
+}
+.ui-li-static.ui-collapsible > .ui-collapsible-heading > .ui-btn {
+    border-top-width: 0;
+}
+.ui-li-static.ui-collapsible > .ui-collapsible-heading.ui-collapsible-heading-collapsed > .ui-btn,
+.ui-li-static.ui-collapsible > .ui-collapsible-content {
+    border-bottom-width: 0;
+}

@@ -21,7 +21,65 @@
 		<script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
 		<script>
-				app.initialize();
+				//app.initialize();
+		// Wait for PhoneGap to load
+	    document.addEventListener("deviceready", onDeviceReady, false);
+		alert("Iniciando aplicación");
+				 //var db = window.sqlitePlugin.openDatabase({name: "prueba"});
+				 	    // Populate the database 
+	    //
+
+	    function select1Success(tx, results) {
+       		
+       		 var len = results.rows.length;
+        	//alert("demo table: " + len + " rows found.");
+        	var str = "" ;
+        	for (var i=0; i<len; i++){
+            	str = str + "Row = " + i + " ID = " + results.rows.item(i).id + " amount =  " + results.rows.item(i).amount + " path = " + results.rows.item(i).path + "\n";
+        	}
+        	alert(str);
+    	}
+
+	   
+	     // Transaction error callback
+	    //
+	    function errorCB(err) {
+	        alert("errorCB: Error procesando SQL: "+err.code);
+	    }
+
+	    function createBD(tx) {
+	        //tx.executeSql('DROP TABLE IF EXISTS demo');
+	        tx.executeSql('CREATE TABLE IF NOT EXISTS demo (id INTEGER PRIMARY KEY AUTOINCREMENT, amount, path)');
+	        //tx.executeSql('INSERT INTO demo (id, amount, path) VALUES (1, "First column","second colum")');
+	        //tx.executeSql('SELECT * FROM demo', [], select1Success, errorCB);
+	    }
+	  
+
+	    // Transaction success callback
+	    //
+	    function successCB() {
+
+	    	alert("successCB: éxito creando la tabla demo");
+
+	    }
+
+	    // PhoneGap is ready
+	    //
+	    function onDeviceReady() {
+	    	alert("onDeviceReady: Abriendo base de datos");
+	    	if(!window.openDatabase)
+	    	{
+
+	    		 alert ("No se puede utilizar la funcion openDatabase");
+	    	}
+	    	else
+	    	{
+	    		// Esta función crea la base de datos si no existe y si existe solo la abre
+	    	    var db = window.openDatabase("prueba", "1.0", "PhoneGap Demo", 2*1024*1024);
+	    	    db.transaction(createBD, errorCB, successCB);
+	    	}
+	    }
+
 		</script>
 					
 </head>
@@ -33,7 +91,7 @@
 <div data-role="page" id="pageone">
 
 		<div id="marco" data-role="header">
-		    <h1>Gastos</h1>
+		    <h1>hellooooooo</h1>
 		</div>
 
    		<div id="body2" data-role="main" class="ui-content">
@@ -43,6 +101,8 @@
 				<a href="#pagetwo" data-role="button" data-inline="true" data-theme="b" data-transition="fade">Inserta cantidad</a>
 				</br>
 				<button id="newAccount" data-inline="true" data-theme="b" onclick="nuevosGastos()">Reiniciar</button>
+				</br>
+				<button id="borrarbd" data-inline="true" data-theme="b" onclick='borrarTablaDeBD("prueba","demo");'>BorrarBD</button>
 		</div>
 
 		<div id="pie" data-role="footer">

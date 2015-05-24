@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html>
+<head> 
+
+<meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="msapplication-tap-highlight" content="no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        
+        <link rel="stylesheet" type="text/css" href="css/index.css" /><!--phonegap-->
+        <link rel="stylesheet" href="js/jQueryMobile/jquery.mobile-1.4.5.min.css"><!--jquerymobile-->
+		
+		<script type="text/javascript" src="js/myindex.js"></script>
+		<script src="js/jquery-1.11.2.min.js"></script>
+		<script src="js/jQueryMobile/jquery.mobile-1.4.5.min.js"></script>
+
+		<link rel="stylesheet" type="text/css" href="mystyle.css"><!--my-->
+
+		<!--Inicializar plugin de phonegap-->
+		<script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+		<script>
+				//app.initialize();
+		
+		// Wait for PhoneGap to load
+	   	document.addEventListener("deviceready", onDeviceReady, false);
+		alert("Iniciando aplicación");
+					//var db = window.sqlitePlugin.openDatabase({name: "prueba"});
+
+		// PhoneGap is ready
+	    function onDeviceReady() {
+	    	alert("onDeviceReady: Abriendo base de datos");
+	    	if(!window.openDatabase) {
+	    		 alert("No se puede utilizar la funcion openDatabase");
+	    	}
+	    	else {
+	    		// Esta función crea la base de datos si no existe y si existe SOLO LA ABRE
+	    	    var db = window.openDatabase("gestionsocios", "1.0", "Gestion Soci", 200000);
+	    	    db.transaction(createBD, errorCB, successCB);
+	    	}
+	    }
+
+    	// Create and populate the database 
+	    function createBD(tx) {
+	        //tx.executeSql('DROP TABLE IF EXISTS demo');
+	        alert ("CREANDO BDDDDDDDDDD!!!!!!!!!!!!!!!!1");
+	        tx.executeSql('CREATE TABLE IF NOT EXISTS socios (id_socio INTEGER PRIMARY KEY AUTOINCREMENT, nombre_socio, pass_socio)');
+	      // tx.executeSql('CREATE TABLE IF NOT EXISTS cuentas (id_cuenta INTEGER PRIMARY KEY AUTOINCREMENT, id_socio, fecha DATE)');
+	       // tx.executeSql('CREATE TABLE IF NOT EXISTS productos (id_producto INTEGER PRIMARY KEY AUTOINCREMENT, nombre_producto, precio_producto, categoria)');
+	      //  tx.executeSql('CREATE TABLE IF NOT EXISTS consumos (id_cuenta INTEGER, id_producto, cantidad, PRIMARY KEY (id_cuenta, id_producto))');
+
+	        tx.executeSql('INSERT INTO socios (id_socio, nombre_socio, pass_socio) VALUES (1, "admin","admin")');
+	      //  tx.executeSql('INSERT INTO socios (id_socio, nombre_socio, pass_socio) VALUES (2, "amaia","amaia")');
+	     //  tx.executeSql('INSERT INTO socios (id_socio, nombre_socio, pass_socio) VALUES (3, "iñaki","iñaki")');
+	        //tx.executeSql('INSERT INTO productos (id_producto, nombre_producto, precio_producto, categoria) VALUES (100, "Infusion", 0,75)');
+	       	//tx.executeSql('INSERT INTO productos (id_producto, nombre_producto, precio_producto, categoria) VALUES (101, "cafe", 0,75)');
+	       	//tx.executeSql('INSERT INTO productos (id_producto, nombre_producto, precio_producto, categoria) VALUES (200, "agua", 0,80)');
+	       	//tx.executeSql('INSERT INTO productos (id_producto, nombre_producto, precio_producto, categoria) VALUES (201, "cocacola", 1,00)');
+	       	//tx.executeSql('INSERT INTO productos (id_producto, nombre_producto, precio_producto, categoria) VALUES (400, "vcosechero", 4,00)');
+//	       	tx.executeSql('INSERT INTO productos (id_producto, nombre_producto, precio_producto, categoria) VALUES (401, "vsidra", 2,80)');
+
+			showTable('socios');
+	      // 	nextIdInTableAvailable('id_socio','socios');
+
+	    }
+
+	   	/* Transaction error callback --> Entra aquí si la tabla y la tupla ya existe. Pendiente decirle al createDB, que si al hacer un select devuelve más 0 filas, no se ejecute y así no dará error code 6*/
+	    function errorCB(err) {
+	       alert("errorCB: Error procesando SQL: "+err.code);
+	    }
+
+	    // Transaction success callback
+	    function successCB() {
+	    	//PRIMERA PRUEBA LLEGA HASTA AQUÍ
+	    	alert("successCB: Éxito creando las tablas");
+	    }
+	    
+	</script>	
+</head>
+<body>
+	 
+<!--PAGINA 0: LOGIN-->
+<div data-role="page" id="login">
+	<div id="marcologin" data-role="header">
+	    <h1>CONSUMOS SOCIEDAD</h1>
+	</div>
+		
+	<div id="bodydatos0" data-role="main" class="ui-content">
+		<h1>Loggeate...</h1>
+		<div id="loggeate">
+			<label>SOCIO: </label>
+			<input type="text" id="txtsociologin" name="txtsociologin" placeholder="nombre socio">
+		</div>
+		<div>
+			<label>CLAVE: </label>
+			<input type="password" id="txtclave" name="txtclave" value="clave">
+		</div>
+		<!-- CON PASSWORD a href="#" data-role="button" data-theme="b"  data-inline="true" onclick="login();">ENTRAR</a-->
+		<a href="#menu" data-role="button" data-theme="b"  data-inline="true" >ENTRAR</a>
+	</div>
+</div>
+
+
+<!-- Pagina 1.0-->
+
+
+<div data-role="page" id="menu">
+	<div id="marcomenu" data-role="header">
+	    <h1>MENÚ</h1>
+	</div>
+	<div id="bodydatos1" data-role="main" class="ui-content">
+		<!-- Menú con jquery mobile-->
+		<ul data-role="listview" >
+		   <li><a href="#paginaevento">Evento</a></li>
+		   <li><a href="#paginacocina">Cocina</a></li>
+		   <li data-role="collapsible" data-iconpos="right" data-inset="false" >
+   			 <h2>Bebidas</h2>
+    			<ul data-role="listview" data-theme="b">
+      				<li><a href="#paginavinos">Vinos</a></li>
+      				<li><a href="#paginarefrescos">Refrescos</a></li>
+      				<li><a href="#paginacafes">Cafes</a></li>
+      				<li><a href="#paginalicores">Licores</a></li>
+    			</ul>
+  			</li>
+		   <li><a href="#paginafactura">Factura</a></li>
+		</ul></br> <!-- fin del menú despeglabe-->
+		<div>
+			<a href="#" data-rel="back" data-role="button">Atrás</a>
+		</div>
+	</div>
+</div>
+
+
+<!--PAGINA 1. 1: CONSUMO SOCIEDAD-->
+<div data-role="page" id="paginaevento">
+
+	<div id="marcoevento" data-role="header">
+	    <h1>EVENTO</h1>
+	</div>
+
+	<div id="bodydatos2" data-role="main" class="ui-content">
+		
+		<div id="datos">
+		<h2 id="titulodatos">DATUAK</h2>	
+			<table id="tablaturno">
+			<tr>
+				<td><b>TXANDA</b><br>turno:</td>
+				<td>
+					<input type="radio" id="turnocomida" name="turnocomida" value="comida" checked>
+					<label>BAZKARIA</b>/comida</label>
+				</td>
+				<td>
+					<input type="radio" id="turnocomida" name="turnocomida" value="cena">
+					<label>AFARIA</b>/cena</label>
+				</td>
+			</tr>
+			</table>
+			
+			<table id="tablacomensales">
+				<tr>
+					<td><b>MAHAKIDEAK</b><br>comensales:</td>
+					<td><input type="number" id="comensales" name="comensales" value=""></td>
+				</tr>
+			</table>
+
+			<table id="tablanumeromesa">
+				<tr>
+					<td><b>ERABILITAKO MAHAIAK</b>/mesas utilizadas:</td>
+				</tr>
+			</table>
+			<table>
+				<tr>
+					<td width="50"><input type="checkbox" id="mesa1" name="mesa1" value="1">1</td>
+					<td width="50"><input type="checkbox" id="mesa2" name="mesa2" value="2">2</td>
+					<td width="50"><input type="checkbox" id="mesa3" name="mesa3" value="3">3</td>
+				</tr>
+				<tr>
+					<td width="50"><input type="checkbox" id="mesa4" name="mesa4" value="4"><br>4</td>
+					<td width="50"><input type="checkbox" id="mesa5" name="mesa5" value="5"><br>5</td>
+					<td width="50"><input type="checkbox" id="mesa6" name="mesa6" value="6"><br>6</td>
+				</tr>
+				<tr>
+					<td width="50"><input type="checkbox" id="mesa7" name="mesa7" value="7"><br>7</td>
+					<td width="50"><input type="checkbox" id="mesa8" name="mesa8" value="8"><br>8</td>
+					<td width="20"><input type="checkbox" id="mesa9" name="mesa9" value="9"><br>9</td>
+				</tr>
+				<tr>
+					<td width="50"><input type="checkbox" id="mesa10" name="mesa10" value="10"><br>10</td>
+					<td width="50"><input type="checkbox" id="mesa11" name="mesa11" value="11"><br>11</td>
+					<td width="50"><input type="checkbox" id="mesa12" name="mesa12" value="12"><br>12</td>
+				</tr>
+			</table>
+		</div> <!-- fin div datos-->
+		<div id="btnsiguiente">
+				<a href="#paginacocina" data-role="button" data-theme="b"  data-inline="true" onclick="totalSociedad()">SIGUIENTE</a>
+		</div>
+	</div>
+</div> <!-- fin de paginaevento -->
+
+<div data-role="page" id="paginacocina">
+
+	<div id="marcococina" data-role="header">
+	    <h1>COCINA</h1>
+	</div>
+
+	<div id="cocina" data-role="main" class="ui-content"> <!-- OJO CON BODYDATOS3-->
+
+				<div class="bloquescocina">
+					<p class="enlinea">mantel</p>
+					<p class="enlinea">1,50€</p>
+					<div class="enlineaboton">
+						<input  type="number" id="mantel" name="mantel" value="">
+					</div>
+				</div>
+				<div class="bloquescocina">
+					<p class="enlinea">aceite litro</p>
+					<p class="enlinea">5,50€</p>
+					<div class="enlineaboton"><input type="number" id="aceitelitro" name="aceitelitro" value=""></div>
+				</div>
+				<div class="bloquescocina">
+					<p class="enlinea">aceite botellin</p>
+					<p class="enlinea">0,80€</p>
+					<div class="enlineaboton"><input type="number" id="aceitebotellin" name="aceitebotellin" value=""></div>
+				</div>
+				<div class="bloquescocina">
+					<p class="enlinea">Descorche aceite</p>
+					<p class="enlinea">1,50€</p>
+					<div class="enlineaboton"><input type="number" id="descorcheaceite" name="descorcheaceite" value=""></div>
+				</div>
+				<div class="bloquescocina">
+					<p class="enlinea">Patatas fritas</p>
+					<p class="enlinea">1,50€</p>
+					<div class="enlineaboton"><input type="number" id="patatasfritas" name="patatasfritas" value=""></div>
+				</div>
+
+	</div>	<!-- fin cocina--> 
+	<div id="porpersona">
+		<p id="tituloporpersona">POR PERSONA</p>
+			<table>
+				<tr>
+					<td>Servilleta</td>
+					<td>0,25€</td>
+					<td><input type="number" id="servilleta" name="servilleta" value=""></td>
+				</tr>
+				<tr>
+					<td>Gas</td>
+					<td>0,40€</td>
+					<td><input type="number" id="gas" name="gas" value=""></td>
+				</tr>
+				<tr>
+					<td>Asador electrico</td>
+					<td>0,40€</td>
+					<td><input type="number" id="asadorelectrico" name="asadorelectrico" value=""></td>
+				</tr>
+				<tr>
+					<td>Despensa socio</td>
+					<td>0,80€</td>
+					<td><input type="number" id="despensasocio" name="despensasocio" value=""></td>
+				</tr>
+				<tr>
+					<td>Despensa NO socio</td>
+					<td>1,50€</td>
+					<td><input type="number" id="despensanosocio" name="espensanosocio" value=""></td>
+				</tr>
+
+			</table>
+		</div>
+		<div id="btnsiguiente">
+				<a href="#paginavinos" data-role="button" data-theme="b"  data-inline="true" data-transition="slide" onclick="totalSociedad()">SIGUIENTE</a>
+		</div>
+	</div>
+</div> 
+
+<div data-role="page" id="paginavinos">
+	<div id="marcovino" data-role="header">
+		<h1>Bebidas</h1>
+	</div>		
+	<div id="vinos" data-role="main" class="ui-content">
+			<h2 id="titulovinos">VINOS</h2>
+				<table>
+					<tr>
+						<td>Vino cosechero</td>
+						<td>4,00€</td>
+						<td><input type="number" id="vinocosechero" name="vinocosechero" value=""></td>
+					</tr>
+					<tr>
+						<td>Vino crianza 4/3</td>
+						<td>8,00€</td>
+						<td><input type="number" id="vinocrianza34" name="vinocrianza34" value=""></td>
+					</tr>
+					<tr>
+						<td>Vino crianza Magnum</td>
+						<td>16,00€</td>
+						<td><input type="number" id="vinocrianzamagnum" name="vinocrianzamagnum" value=""></td>
+					</tr>
+					<tr>
+						<td>Vino reserva</td>
+						<td>11,00€</td>
+						<td><input type="number" id="vinoreserva" name="vinoreserva" value=""></td>
+					</tr>
+					<tr>
+						<td>Vino clarete</td>
+						<td>4,50€</td>
+						<td><input type="number" id="vinoclarete" name="vinoclarete" value=""></td>
+					</tr>
+					<tr>
+						<td>Vino clarete aguja</td>
+						<td>4,50€</td>
+						<td><input type="number" id="vinoclareteaguja" name="vinoclareteaguja" value=""></td>
+					</tr>
+					<tr>
+						<td>Vino blanco seco</td>
+						<td>5,50€</td>
+						<td><input type="number" id="vinoblancoseco" name="vinoblancoseco" value=""></td>
+					</tr>
+					<tr>
+						<td>Vino blanco aguja</td>
+						<td>5,50€</td>
+						<td><input type="number" id="vinoblancoaguja" name="vinoblancoaguja" value=""></td>
+					</tr>
+					<tr>
+						<td>Txakoli</td>
+						<td>9,00€</td>
+						<td><input type="number" id="txakoli" name="txakoli" value=""></td>
+					</tr>
+					<tr>
+						<td>Sidra</td>
+						<td>2,80€</td>
+						<td><input type="number" id="sidra" name="sidra" value=""></td>
+					</tr>
+					<tr>
+						<td>Descorche de vinos</td>
+						<td>2,50€</td>
+						<td><input type="number" id="descorchedevinos" name="descorhedevinos"></td>
+					</tr>
+					<tr>
+						<td>Cava</td>
+						<td>9,50€</td>
+						<td><input type="number" id="cava" name="cava" value=""></td>
+					</tr>
+					<tr>
+						<td>Champagne</td>
+						<td>30,00€</td>
+						<td><input type="number" id="champagne" name="champagne" value=""></td>
+					</tr>
+					<tr>
+						<td>Descorche cavas</td>
+						<td>3,00€</td>
+						<td><input type="number" id="descorchecavas" name="descorchecavas" value=""></td>
+					</tr>
+				</table>
+
+				<div data-role="controlgroup" data-type="horizontal">
+			      <a href="#paginarefrescos" class="ui-btn">Refrescos</a>
+			      <a href="#paginacafes" class="ui-btn">Cafés</a>
+			      <a href="#paginalicores" class="ui-btn">Licores</a>
+			      <a href="#paginafactura" class="ui-btn">Ir a factura</a>
+			    </div>
+			    <div class="botonmenu">
+					<a href="#menu" data-role="button" data-theme="b"  data-inline="true" onclick="totalSociedad()">Menú</a>	
+				</div>
+				<div class="botonsiguiente">
+						<a href="#paginarefrescos" data-role="button" data-theme="b"  data-inline="true" data-transition="slide" onclick="totalSociedad()">Siguiente</a>	
+				</div>		
+	</div>
+</div><!-- fin de pagína vinos-->
+
+<div data-role="page" id="paginarefrescos">
+	<div id="marcorefresco" data-role="header">
+		<h1>Bebidas</h1>
+	</div>		
+	<div id="refrescos" data-role="main" class="ui-content">
+		<h2 id="titulorefrescos">REFRESCOS</h2>
+			<table>
+				<tr>
+					<td>Agua mineral</td>
+					<td>0,80€</td>
+					<td><input type="number" id="aguamineral" name="aguamineral" value=""></td>
+				</tr>
+				<tr>
+					<td>Tonica</td>
+					<td>1,00€</td>
+					<td><input type="number" id="tonica" name="tonica" value=""></td>
+				</tr>
+				<tr>
+					<td>Kas</td>
+					<td>1,00€</td>
+					<td><input type="number" id="kas" name="kas" value=""></td>
+				</tr>
+				<tr>
+					<td>Coca Cola</td>
+					<td>1,00€</td>
+					<td><input type="number" id="cocacola" name="cocacola" value=""></td>
+				</tr>
+				<tr>
+					<td>Cerveza</td>
+					<td>1,40€</td>
+					<td><input type="number" id="cerveza" name="cerveza" value=""></td>
+				</tr>				
+			</table>
+			<div data-role="controlgroup" data-type="horizontal">
+			      <a href="#paginavinos" class="ui-btn">Vinos</a>		      
+			      <a href="#paginacafes" class="ui-btn">Cafés</a>
+			      <a href="#paginalicores" class="ui-btn">Licores</a>	
+			      <a href="#paginafactura" class="ui-btn">Ir a factura</a>
+			</div>
+			<div class="botonmenu">
+				<a href="#menu" data-role="button" data-theme="b"  data-inline="true" onclick="totalSociedad()">Menú</a>	
+			</div>
+			<div class="botonsiguiente">
+				<a href="#paginacafes" data-role="button" data-theme="b"  data-inline="true" data-transition="slide" onclick="totalSociedad()">Siguiente</a>	
+			</div>				
+	</div>
+</div><!-- fin de pagína refrescos-->
+
+<div data-role="page" id="paginacafes">
+	<div id="marcocafes" data-role="header">
+		<h1>Bebidas</h1>
+	</div>	
+	<div id="cafes" data-role="main" class="ui-content">
+		<h2 id="titulocafes">CAFES</h2>
+		<table>
+			<tr>
+				<td>Infusiones</td>
+				<td>0,75€</td>
+				<td><input type="number" id="infusiones" name="infusiones" value=""></td>
+			</tr>
+			<tr>
+				<td>Cafe solo/cortado/con leche</td>
+				<td>0,75€</td>
+				<td><input type="number" id="cafesolocortadoconleche" name="cafesolocortadoconleche" value=""></td>
+			</tr>
+			<tr>
+				<td>Descafeinado</td>
+				<td>0,75€</td>
+				<td><input type="number" id="descafeinado" name="descafeinado" value=""></td>
+			</tr>
+			<tr>
+				<td>Puros</td>
+				<td>1,00€</td>
+				<td><input type="number" id="puros" name="puros" value=""></td>
+			</tr>
+		</table>
+		<div data-role="controlgroup" data-type="horizontal">
+			      <a href="#paginarefrescos" class="ui-btn">Refrescos</a>
+			      <a href="#paginacafes" class="ui-btn">Cafés</a>
+			      <a href="#paginalicores" class="ui-btn">Licores</a>
+			      <a href="#paginafactura" class="ui-btn">Ir a factura</a>
+	    </div>
+	    <div class="botonmenu">
+			<a href="#menu" data-role="button" data-theme="b"  data-inline="true" onclick="totalSociedad()">Menú</a>	
+		</div>
+		<div class="botonsiguiente">
+				<a href="#paginalicores" data-role="button" data-theme="b"  data-inline="true" data-transition="slide" onclick="totalSociedad()">Siguiente</a>	
+		</div>	
+	</div>
+</div><!-- fin de pagína cafés-->
+
+<div data-role="page" id="paginalicores">
+	<div id="marcolicores" data-role="header">
+		<h1>Bebidas</h1>
+	</div>	
+	<div id="licores" data-role="main" class="ui-content">
+		<h2 id="titulolicores">LICORES</h2>
+			<table>
+				<tr>
+					<td>Coñac</td>
+					<td>1,90€</td>
+					<td><input type="number" id="coñac" name="coñac" value=""></td>
+				</tr>
+				<tr>
+					<td>Ginebra</td>
+					<td>1,90€</td>
+					<td><input type="number" id="ginebra" name="ginebra" value=""></td>
+				</tr>
+				<tr>
+					<td>Anis</td>
+					<td>1,50€</td>
+					<td><input type="number" id="anis" name="anis" value=""></td>
+				</tr>
+				<tr>
+					<td>Cointreau</td>
+					<td>2,00€</td>
+					<td><input type="number" id="cointreau" name="cointreau" value=""></td>
+				</tr>
+				<tr>
+					<td>Whisky</td>
+					<td>1,90€</td>
+					<td><input type="number" id="whisky" name="whisky" value=""></td>
+				</tr>
+				<tr>
+					<td>Whisky de Malta</td>
+					<td>2,60€</td>
+					<td><input type="number" id="whiskydemalta" name="whiskydemalta" value=""></td>
+				</tr>
+				<tr>
+					<td>Baileys</td>
+					<td>1,90€</td>
+					<td><input type="number" id="baileys" name="baileys" value=""></td>
+				</tr>
+				<tr>
+					<td>Ron</td>
+					<td>1,90€</td>
+					<td><input type="number" id="ron" name="ron" value=""></td>
+				</tr>
+				<tr>
+					<td>Ron reserva</td>
+					<td>2,60€</td>
+					<td><input type="number" id="ronreserva" name="ronreserva" value=""></td>
+				</tr>
+				<tr>
+					<td>Vodka</td>
+					<td>1,90€</td>
+					<td><input type="number" id="vodka" name="vodka" value=""></td>
+				</tr>
+				<tr>
+					<td>Licor manzana<br>melocoton</td>
+					<td>1,70€</td>
+					<td><input type="number" id="licormanzanamelocoton" name="licormanzanamelocoton" value=""></td>
+				</tr>
+				<tr>
+					<td>Licor de hierbas</td>
+					<td>1,70€</td>
+					<td><input type="number" id="licordehierbas" name="licordehierbas" value=""></td>
+				</tr>
+				<tr>
+					<td>Armagnac</td>
+					<td>2,70€</td>
+					<td><input type="number" id="armagnac" name="armagnac" value=""></td>
+				</tr>
+			</table>
+			<div data-role="controlgroup" data-type="horizontal">
+			      <a href="#paginavinos" class="ui-btn">Vinos</a>
+			      <a href="#paginarefrescos" class="ui-btn">Refrescos</a>			      
+			      <a href="#paginacafes" class="ui-btn">Cafés</a>
+			      <a href="#paginafactura" class="ui-btn">Ir a factura</a>
+			</div>
+			<div class="botonmenu">
+				<a href="#menu" data-role="button" data-theme="b"  data-inline="true" onclick="totalSociedad()">Menú</a>	
+			</div>
+			<div class="botonsiguiente">
+				<a href="#paginafactura" data-role="button" data-theme="b"  data-inline="true" data-transition="slide" onclick="totalSociedad()">Siguiente</a>	
+			</div>	
+		</div>
+</div><!-- fin de pagína licores-->
+
+<div data-role="page" id="paginafactura">
+	<div id="marco3" data-role="header">
+    	<h1>FACTURA</h1>
+  	</div>
+
+  	<div id="bodydatos3" data-role="main" class="ui-content">
+  		<div id="datosfactura">
+	  		<table>
+				<tr>
+					<td>FACTURA:</td>
+	  				<td><div id="txtfactura"></div></td>
+	  			</tr>
+	  			<tr>
+					<td>SOCIO:</td>
+	  				<td><div id="txtsocio"></div></td>
+	  			</tr>
+	  			<tr>
+					<td>TURNO:</td>
+	  				<td><div id="txtturno"></div></td>
+	  			</tr>
+	  			<tr>
+					<td>MESA:</td>
+	  				<td><div id="txtmesa"></div></td>
+	  			</tr>
+	  			<tr>
+					<td>COMENSALES:</td>
+	  				<td><div id="txtcomensales"></div></td>
+	  			</tr>
+	  			<tr>
+					<td>TOTAL SOCIEDAD:</td>
+	  				<td><div id="txtsociedad"></div></td>
+	  			</tr>
+	  			<tr>
+					<td>TOTAL CONSUMIDO:</td>
+	  				<td><div id="txttotalconsumido"></div></td>
+	  			</tr>
+	  		</table>
+	  		<hr>
+	  		<table>
+	  			<tr>
+	  				<td>TOTAL FACTURA:</td>
+	  				<td><div id="txttotalfactura"></div></td>
+	  			</tr>
+	  			<tr>
+	  				<td>TOTAL POR PERSONA:</td>
+	  				<td><div id="txttotalporpersona"></div></td>
+	  			</tr>
+	  		</table>
+	  	</div>
+	  	<input type="button" data-role="button" data-theme="b"  data-inline="true" id="btnrealizarcuenta" name="btnrealizarcuenta" value="REALIZAR FACTURA" onclick="totalfactura() ">
+  	</div>
+</div><!-- fin de pagína factura-->
+
+</body>
+</html>

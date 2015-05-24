@@ -55,6 +55,7 @@
 		// copiar la imagen a la sd
 		sessionStorage.setItem('imagepath', entry.fullPath);
 		path_actual=entry.fullPath;
+		alert(path_actual);
 	}
 
 	function resOnError(error) {
@@ -116,7 +117,8 @@
 		ticket ["path"] = path;
 
 		lista_tickets.push(ticket);
-						
+		insertarTicketEnBD(cantidad, path) ;
+				
 		document.getElementById("Numero_tickets").innerHTML ="Tickets: " + lista_tickets.length;
 	}
 	
@@ -135,7 +137,6 @@
 	function actualizarPaginaPpal() {
 		document.getElementById("Mostrar_Cantidad").innerHTML =cantidad_total + " &#8364;";
 	}
-
 	//Método para vaciar el array de tickets
 	function vaciarListaTickets() {
 		lista_tickets=[];
@@ -143,8 +144,100 @@
 		document.getElementById("Numero_tickets").innerHTML ="Tickets: " + lista_tickets.length;
 	}
 
+
+//// FUNCIONES PARA COMPROBAR EL CORRECTO FUNCIONAMIENTO DE LA BASE DE DATOS
+
+
+/*function MostrarBD(show_callback)
+{
+
+		var db = window.openDatabase("prueba", "1.0", "PhoneGap Demo", 2*1024*1024);
+		db.transaction(showDB, errorBD, function(tx, results)
+			{
+
+
+			});
+
+
+}
+function showDB(tx) {
+
+    tx.executeSql('SELECT * FROM demo', [], selectSuccess, errorBD);
+}
+*/
+
+var tabla_a_borrar="";
+	function borrarTablaDeBD( bd, tabla)
+	{
+		tabla_a_borrar=tabla;
+		 var db = window.openDatabase(bd, "1.0", "PhoneGap Demo", 2*1024*1024);
+   	    db.transaction(deleteBD, errorTD, successTD);
+	}
+
+	function successTD() {
+	   	alert("successTD: éxito borrando tabla" + tabla_a_borrar);
+	   	tabla_a_borrar="";
+	}
+
+	function errorTD() {
+	   	alert("errorTD: No se pudo borrar tabla" + tabla_a_borrar);
+	   	tabla_a_borrar="";
+	}
+
+	function deleteBD(tx) {
+        tx.executeSql('DROP TABLE IF EXISTS '+tabla_a_borrar);
+        tx.executeSql('CREATE TABLE IF NOT EXISTS demo (id INTEGER PRIMARY KEY AUTOINCREMENT, amount, path)');
+        id=0;
+
+	}
+	    
+	function selectSuccess(tx, results) {
+       		alert("showing");
+       		 var len = results.rows.length;
+        	//alert("demo table: " + len + " rows found.");
+        	var str = "contenido tabla demo en bd prueba:\n---------------------------\n" ;
+        	for (var i=0; i<len; i++){
+            	str = str + "Row = " + i + " ID = " + results.rows.item(i).id + " amount =  " + results.rows.item(i).amount + " path = " + results.rows.item(i).path + "\n";
+        	}
+        	alert(str);
+    	}
+
+	// Transaction success callback
+	//
+
+	var amount_to_insert;
+	var path_to_insert="";
+	var id=0;
+
+    function insertarTicketEnBD(cantidad, path) {
+		amount_to_insert = cantidad_total;
+		var db = window.openDatabase("prueba", "1.0", "PhoneGap Demo", 2*1024*1024);
+		db.transaction(insertNew, errorBD, successIN);
+	}
+
+	function insertNew(tx) {
+    
+    	var query = 'INSERT INTO demo (id, amount, path) VALUES (DEFAULT, "'+amount_to_insert + '","'+path_to_insert+'")';
+    	alert("lanzando la query: " + query);
+        // tx.executeSql('INSERT INTO demo (id, amount, path) VALUES ('+id+', "'+amount_to_insert + '","'+path_to_insert+'")');
+	     tx.executeSql(query); 
+        id ++;
+
+        tx.executeSql('SELECT * FROM demo', [], selectSuccess, errorBD);
+    }
+  	function errorBD(err) {
+	       alert("errorCB: Error procesando SQL: "+err.code);
+	}
+
+	function successIN() {
+	   	alert("successIN: éxito insertando nueva tupla");
+	}
+
 	//-- Nueva cuenta, ponemos 0 las variables para volver a empezar --//
 	function nuevosGastos () {
+
+		
+	    alert("inicializando");
 		cantidad_total = "0";
 		
 		document.getElementById("Total_Amount_label").innerHTML = "Total acumulado: " + cantidad_total  + " &#8364;";

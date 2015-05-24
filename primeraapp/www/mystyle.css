@@ -1,12 +1,10 @@
 #pagetwo, #pageone {
-
   background-color: #ADE0BA;
   text-align: center;
 }
 
 #body1, #body2 {
     text-align: center;
-
     width: 100%;
     height: 100%;
 }
