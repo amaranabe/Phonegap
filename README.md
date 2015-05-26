@@ -1,10 +1,11 @@
 # Phonegap
 Este repositorio alberga diversos proyectos desarrollados con Phonegap
 
-###* Primerraapp: 
+### Primerraapp: 
 Aplicación que gestiona costes puntuales
-###* Gestsoci: 
+### Gestsoci: 
 Aplicación que calcula los consumos que los socios realizan en una sociedad
+
 		*Elementos:
 				-Login
 				-Elección productos
