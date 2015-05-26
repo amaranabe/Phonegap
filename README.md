@@ -1,11 +1,12 @@
 # Phonegap
 Este repositorio alberga diversos proyectos desarrollados con Phonegap
 
-##* Primerraapp: aplicación que gestiona costes puntuales
-##* Gestsoci: 
-		*Función: aplicación que gestiona los consumos que se realizan en una sociedad
+###* Primerraapp: 
+Aplicación que gestiona costes puntuales
+###* Gestsoci: 
+Aplicación que calcula los consumos que los socios realizan en una sociedad
 		*Elementos:
-				-Usuarios
+				-Login
 				-Elección productos
 				-Generación factura --> cálculo costes
 		*Herramientas:
