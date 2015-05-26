@@ -25,12 +25,12 @@
 		
 		// Wait for PhoneGap to load
 	   	document.addEventListener("deviceready", onDeviceReady, false);
-		alert("Iniciando aplicación");
-					//var db = window.sqlitePlugin.openDatabase({name: "prueba"});
+		//alert("Iniciando aplicación");
+		//var db = window.sqlitePlugin.openDatabase({name: "prueba"});
 
 		// PhoneGap is ready
 	    function onDeviceReady() {
-	    	alert("onDeviceReady: Abriendo base de datos");
+	    	//alert("onDeviceReady: Abriendo base de datos");
 	    	if(!window.openDatabase) {
 	    		 alert("No se puede utilizar la funcion openDatabase");
 	    	}
@@ -44,13 +44,12 @@
     	// Create and populate the database 
 	    function createBD(tx) {
 	        //tx.executeSql('DROP TABLE IF EXISTS demo');
-	        alert ("CREANDO BDDDDDDDDDD!!!!!!!!!!!!!!!!1");
 	        tx.executeSql('CREATE TABLE IF NOT EXISTS socios (id_socio INTEGER PRIMARY KEY AUTOINCREMENT, nombre_socio, pass_socio)');
 	      // tx.executeSql('CREATE TABLE IF NOT EXISTS cuentas (id_cuenta INTEGER PRIMARY KEY AUTOINCREMENT, id_socio, fecha DATE)');
-	       // tx.executeSql('CREATE TABLE IF NOT EXISTS productos (id_producto INTEGER PRIMARY KEY AUTOINCREMENT, nombre_producto, precio_producto, categoria)');
+	      // tx.executeSql('CREATE TABLE IF NOT EXISTS productos (id_producto INTEGER PRIMARY KEY AUTOINCREMENT, nombre_producto, precio_producto, categoria)');
 	      //  tx.executeSql('CREATE TABLE IF NOT EXISTS consumos (id_cuenta INTEGER, id_producto, cantidad, PRIMARY KEY (id_cuenta, id_producto))');
 
-	        tx.executeSql('INSERT INTO socios (id_socio, nombre_socio, pass_socio) VALUES (1, "admin","admin")');
+	      //  tx.executeSql('INSERT INTO socios (id_socio, nombre_socio, pass_socio) VALUES (1, "admin","admin")');
 	      //  tx.executeSql('INSERT INTO socios (id_socio, nombre_socio, pass_socio) VALUES (2, "amaia","amaia")');
 	     //  tx.executeSql('INSERT INTO socios (id_socio, nombre_socio, pass_socio) VALUES (3, "iñaki","iñaki")');
 	        //tx.executeSql('INSERT INTO productos (id_producto, nombre_producto, precio_producto, categoria) VALUES (100, "Infusion", 0,75)');
@@ -62,25 +61,26 @@
 
 			showTable('socios');
 	      // 	nextIdInTableAvailable('id_socio','socios');
-
 	    }
 
 	   	/* Transaction error callback --> Entra aquí si la tabla y la tupla ya existe. Pendiente decirle al createDB, que si al hacer un select devuelve más 0 filas, no se ejecute y así no dará error code 6*/
 	    function errorCB(err) {
-	       alert("errorCB: Error procesando SQL: "+err.code);
+	      // alert("errorCB: Error procesando SQL: "+err.code);
 	    }
 
 	    // Transaction success callback
 	    function successCB() {
 	    	//PRIMERA PRUEBA LLEGA HASTA AQUÍ
-	    	alert("successCB: Éxito creando las tablas");
+	    	//alert("successCB: Éxito creando las tablas");
 	    }
+
+
 	    
 	</script>	
 </head>
 <body>
 	 
-<!--PAGINA 0: LOGIN-->
+<!--PAGINA 1: LOGIN-->
 <div data-role="page" id="login">
 	<div id="marcologin" data-role="header">
 	    <h1>CONSUMOS SOCIEDAD</h1>
@@ -96,15 +96,12 @@
 			<label>CLAVE: </label>
 			<input type="password" id="txtclave" name="txtclave" value="clave">
 		</div>
-		<!-- CON PASSWORD a href="#" data-role="button" data-theme="b"  data-inline="true" onclick="login();">ENTRAR</a-->
-		<a href="#menu" data-role="button" data-theme="b"  data-inline="true" >ENTRAR</a>
+		<a href="#" data-role="button" data-theme="b"  data-inline="true" onclick="login();">ENTRAR</a>
+		<!-- <a href="#menu" data-role="button" data-theme="b"  data-inline="true" >ENTRAR</a> -->
 	</div>
 </div>
 
-
-<!-- Pagina 1.0-->
-
-
+<!-- Pagina 2: MENU-->
 <div data-role="page" id="menu">
 	<div id="marcomenu" data-role="header">
 	    <h1>MENÚ</h1>
@@ -125,14 +122,14 @@
   			</li>
 		   <li><a href="#paginafactura">Factura</a></li>
 		</ul></br> <!-- fin del menú despeglabe-->
-		<div>
-			<a href="#" data-rel="back" data-role="button">Atrás</a>
-		</div>
+		
+	</div>
+	<div id="piemenu" data-role="footer" data-position="fixed" align="center">
+	    <a href="#login" data-role="button" data-inline="true" data-theme="b" onclick="cerrarSesion()">Cerrar Sesión</a>
 	</div>
 </div>
 
-
-<!--PAGINA 1. 1: CONSUMO SOCIEDAD-->
+<!--PAGINA 3: EVENTO-->
 <div data-role="page" id="paginaevento">
 
 	<div id="marcoevento" data-role="header">
@@ -142,7 +139,6 @@
 	<div id="bodydatos2" data-role="main" class="ui-content">
 		
 		<div id="datos">
-		<h2 id="titulodatos">DATUAK</h2>	
 			<table id="tablaturno">
 			<tr>
 				<td><b>TXANDA</b><br>turno:</td>
@@ -192,12 +188,17 @@
 				</tr>
 			</table>
 		</div> <!-- fin div datos-->
-		<div id="btnsiguiente">
-				<a href="#paginacocina" data-role="button" data-theme="b"  data-inline="true" onclick="totalSociedad()">SIGUIENTE</a>
-		</div>
+	</div>
+	<div id="pieevento" data-role="footer" data-position="fixed" align="center">
+	    	<div data-role="controlgroup" data-theme="b" data-type="horizontal">
+			      <a href="#menu" class="ui-btn" data-role="button">Menú</a>			      
+			      <a href="#paginafactura" class="ui-btn" data-role="button" onclick="totalfactura()">Ir a factura</a>
+			      <a href="#paginacocina" class="ui-btn" data-role="button">Siguiente</a>
+			</div>
 	</div>
 </div> <!-- fin de paginaevento -->
 
+<!--PAGINA 4: CONSUMOS COCINA-->
 <div data-role="page" id="paginacocina">
 
 	<div id="marcococina" data-role="header">
@@ -205,7 +206,6 @@
 	</div>
 
 	<div id="cocina" data-role="main" class="ui-content"> <!-- OJO CON BODYDATOS3-->
-
 				<div class="bloquescocina">
 					<p class="enlinea">mantel</p>
 					<p class="enlinea">1,50€</p>
@@ -233,10 +233,8 @@
 					<p class="enlinea">1,50€</p>
 					<div class="enlineaboton"><input type="number" id="patatasfritas" name="patatasfritas" value=""></div>
 				</div>
-
-	</div>	<!-- fin cocina--> 
-	<div id="porpersona">
-		<p id="tituloporpersona">POR PERSONA</p>
+		<div id="porpersona">
+			<p id="tituloporpersona">POR PERSONA</p>
 			<table>
 				<tr>
 					<td>Servilleta</td>
@@ -263,15 +261,21 @@
 					<td>1,50€</td>
 					<td><input type="number" id="despensanosocio" name="espensanosocio" value=""></td>
 				</tr>
-
 			</table>
 		</div>
-		<div id="btnsiguiente">
-				<a href="#paginavinos" data-role="button" data-theme="b"  data-inline="true" data-transition="slide" onclick="totalSociedad()">SIGUIENTE</a>
-		</div>
-	</div>
-</div> 
 
+	</div>	<!-- fin main cocina-->
+	<div id="piecocina" data-role="footer" data-position="fixed" align="center">
+			<div data-role="controlgroup" data-theme="b" data-type="horizontal">
+						<a href="#paginaevento" class="ui-btn">Atrás</a>						
+					    <a href="#menu" class="ui-btn">Menú</a>			      
+					    <a href="#paginafactura" class="ui-btn" onclick="totalfactura()">Ir a factura</a>
+					    <a href="#paginavinos" class="ui-btn" data-theme="b">Siguiente</a>
+			</div>
+	</div>
+</div> <!-- fin de paginacocina -->
+
+<!--PAGINA 5: CONSUMOS VINO-->
 <div data-role="page" id="paginavinos">
 	<div id="marcovino" data-role="header">
 		<h1>Bebidas</h1>
@@ -280,42 +284,42 @@
 			<h2 id="titulovinos">VINOS</h2>
 				<table>
 					<tr>
-						<td>Vino cosechero</td>
+						<td>cosechero</td>
 						<td>4,00€</td>
 						<td><input type="number" id="vinocosechero" name="vinocosechero" value=""></td>
 					</tr>
 					<tr>
-						<td>Vino crianza 4/3</td>
+						<td>crianza 4/3</td>
 						<td>8,00€</td>
 						<td><input type="number" id="vinocrianza34" name="vinocrianza34" value=""></td>
 					</tr>
 					<tr>
-						<td>Vino crianza Magnum</td>
+						<td>crianza Magnum</td>
 						<td>16,00€</td>
 						<td><input type="number" id="vinocrianzamagnum" name="vinocrianzamagnum" value=""></td>
 					</tr>
 					<tr>
-						<td>Vino reserva</td>
+						<td>reserva</td>
 						<td>11,00€</td>
 						<td><input type="number" id="vinoreserva" name="vinoreserva" value=""></td>
 					</tr>
 					<tr>
-						<td>Vino clarete</td>
+						<td>clarete</td>
 						<td>4,50€</td>
 						<td><input type="number" id="vinoclarete" name="vinoclarete" value=""></td>
 					</tr>
 					<tr>
-						<td>Vino clarete aguja</td>
+						<td>clarete aguja</td>
 						<td>4,50€</td>
 						<td><input type="number" id="vinoclareteaguja" name="vinoclareteaguja" value=""></td>
 					</tr>
 					<tr>
-						<td>Vino blanco seco</td>
+						<td>blanco seco</td>
 						<td>5,50€</td>
 						<td><input type="number" id="vinoblancoseco" name="vinoblancoseco" value=""></td>
 					</tr>
 					<tr>
-						<td>Vino blanco aguja</td>
+						<td>blanco aguja</td>
 						<td>5,50€</td>
 						<td><input type="number" id="vinoblancoaguja" name="vinoblancoaguja" value=""></td>
 					</tr>
@@ -330,7 +334,7 @@
 						<td><input type="number" id="sidra" name="sidra" value=""></td>
 					</tr>
 					<tr>
-						<td>Descorche de vinos</td>
+						<td>Descorche vino</td>
 						<td>2,50€</td>
 						<td><input type="number" id="descorchedevinos" name="descorhedevinos"></td>
 					</tr>
@@ -345,27 +349,30 @@
 						<td><input type="number" id="champagne" name="champagne" value=""></td>
 					</tr>
 					<tr>
-						<td>Descorche cavas</td>
+						<td>Descorche cava</td>
 						<td>3,00€</td>
 						<td><input type="number" id="descorchecavas" name="descorchecavas" value=""></td>
 					</tr>
 				</table>
 
-				<div data-role="controlgroup" data-type="horizontal">
-			      <a href="#paginarefrescos" class="ui-btn">Refrescos</a>
-			      <a href="#paginacafes" class="ui-btn">Cafés</a>
-			      <a href="#paginalicores" class="ui-btn">Licores</a>
-			      <a href="#paginafactura" class="ui-btn">Ir a factura</a>
+				<div data-role="controlgroup" data-type="horizontal" align="center">
+					      <a href="#paginarefrescos" class="ui-btn">Refrescos</a>
+					      <a href="#paginacafes" class="ui-btn">Cafés</a>
+					      <a href="#paginalicores" class="ui-btn">Licores</a>
 			    </div>
-			    <div class="botonmenu">
-					<a href="#menu" data-role="button" data-theme="b"  data-inline="true" onclick="totalSociedad()">Menú</a>	
-				</div>
-				<div class="botonsiguiente">
-						<a href="#paginarefrescos" data-role="button" data-theme="b"  data-inline="true" data-transition="slide" onclick="totalSociedad()">Siguiente</a>	
-				</div>		
+	
 	</div>
-</div><!-- fin de pagína vinos-->
+		<div id="pievinos" data-role="footer" data-position="fixed" align="center">
+			<div data-role="controlgroup" data-theme="b" data-type="horizontal">
+						<a href="#paginacocina" class="ui-btn" >Atrás</a>						
+					    <a href="#menu" class="ui-btn">Menú</a>			      
+					    <a href="#paginafactura" class="ui-btn" onclick="totalfactura()">Ir a factura</a>
+					    <a href="#paginarefrescos" class="ui-btn">Siguiente</a>
+		</div>
+	</div>
+</div><!-- fin de página vinos-->
 
+<!--PAGINA 6: CONSUMOS REFRESCOS-->
 <div data-role="page" id="paginarefrescos">
 	<div id="marcorefresco" data-role="header">
 		<h1>Bebidas</h1>
@@ -399,21 +406,23 @@
 					<td><input type="number" id="cerveza" name="cerveza" value=""></td>
 				</tr>				
 			</table>
-			<div data-role="controlgroup" data-type="horizontal">
+			<div data-role="controlgroup" data-type="horizontal" align="center">
 			      <a href="#paginavinos" class="ui-btn">Vinos</a>		      
 			      <a href="#paginacafes" class="ui-btn">Cafés</a>
 			      <a href="#paginalicores" class="ui-btn">Licores</a>	
-			      <a href="#paginafactura" class="ui-btn">Ir a factura</a>
-			</div>
-			<div class="botonmenu">
-				<a href="#menu" data-role="button" data-theme="b"  data-inline="true" onclick="totalSociedad()">Menú</a>	
-			</div>
-			<div class="botonsiguiente">
-				<a href="#paginacafes" data-role="button" data-theme="b"  data-inline="true" data-transition="slide" onclick="totalSociedad()">Siguiente</a>	
-			</div>				
+			</div>			
 	</div>
+		<div id="pierefrescos" data-role="footer" data-position="fixed" align="center">
+			<div data-role="controlgroup" data-theme="b" data-type="horizontal">
+						<a href="#paginavinos" class="ui-btn">Atrás</a>						
+					    <a href="#menu" class="ui-btn">Menú</a>			      
+					    <a href="#paginafactura" class="ui-btn" onclick="totalfactura()">Ir a factura</a>
+					    <a href="#paginacafes" class="ui-btn">Siguiente</a>
+			</div>
+		</div>
 </div><!-- fin de pagína refrescos-->
 
+<!--PAGINA 7: CONSUMOS CAFES-->
 <div data-role="page" id="paginacafes">
 	<div id="marcocafes" data-role="header">
 		<h1>Bebidas</h1>
@@ -442,21 +451,23 @@
 				<td><input type="number" id="puros" name="puros" value=""></td>
 			</tr>
 		</table>
-		<div data-role="controlgroup" data-type="horizontal">
+		<div data-role="controlgroup" data-type="horizontal" align="center">
 			      <a href="#paginarefrescos" class="ui-btn">Refrescos</a>
 			      <a href="#paginacafes" class="ui-btn">Cafés</a>
 			      <a href="#paginalicores" class="ui-btn">Licores</a>
-			      <a href="#paginafactura" class="ui-btn">Ir a factura</a>
 	    </div>
-	    <div class="botonmenu">
-			<a href="#menu" data-role="button" data-theme="b"  data-inline="true" onclick="totalSociedad()">Menú</a>	
-		</div>
-		<div class="botonsiguiente">
-				<a href="#paginalicores" data-role="button" data-theme="b"  data-inline="true" data-transition="slide" onclick="totalSociedad()">Siguiente</a>	
-		</div>	
+	</div>
+	<div id="piecafes" data-role="footer" data-position="fixed" align="center">
+			<div data-role="controlgroup" data-theme="b" data-type="horizontal">
+						<a href="#paginarefrescos" class="ui-btn">Atrás</a>						
+					    <a href="#menu" class="ui-btn" >Menú</a>			      
+					    <a href="#paginafactura" class="ui-btn" onclick="totalfactura()">Ir a factura</a>
+					    <a href="#paginalicores" class="ui-btn">Siguiente</a>
+			</div>
 	</div>
 </div><!-- fin de pagína cafés-->
 
+<!--PAGINA 8: CONSUMOS LICORES-->
 <div data-role="page" id="paginalicores">
 	<div id="marcolicores" data-role="header">
 		<h1>Bebidas</h1>
@@ -530,23 +541,19 @@
 					<td><input type="number" id="armagnac" name="armagnac" value=""></td>
 				</tr>
 			</table>
-			<div data-role="controlgroup" data-type="horizontal">
-			      <a href="#paginavinos" class="ui-btn">Vinos</a>
-			      <a href="#paginarefrescos" class="ui-btn">Refrescos</a>			      
-			      <a href="#paginacafes" class="ui-btn">Cafés</a>
-			      <a href="#paginafactura" class="ui-btn">Ir a factura</a>
+	</div>
+	<div id="pielicores" data-role="footer" data-position="fixed" align="center">
+			<div data-role="controlgroup" data-theme="b" data-type="horizontal">
+						<a href="#paginacafes" class="ui-btn" >Atrás</a>						
+					    <a href="#menu" class="ui-btn">Menú</a>			      
+					    <a href="#paginafactura" class="ui-btn" onclick="totalfactura()">Ir a factura</a>
 			</div>
-			<div class="botonmenu">
-				<a href="#menu" data-role="button" data-theme="b"  data-inline="true" onclick="totalSociedad()">Menú</a>	
-			</div>
-			<div class="botonsiguiente">
-				<a href="#paginafactura" data-role="button" data-theme="b"  data-inline="true" data-transition="slide" onclick="totalSociedad()">Siguiente</a>	
-			</div>	
-		</div>
-</div><!-- fin de pagína licores-->
+	</div>
+</div><!-- fin de pagina licores-->
 
+<!--PAGINA 9: CONSUMOS FACTURA-->
 <div data-role="page" id="paginafactura">
-	<div id="marco3" data-role="header">
+	<div id="marcofactura" data-role="header">
     	<h1>FACTURA</h1>
   	</div>
 
@@ -594,8 +601,13 @@
 	  			</tr>
 	  		</table>
 	  	</div>
-	  	<input type="button" data-role="button" data-theme="b"  data-inline="true" id="btnrealizarcuenta" name="btnrealizarcuenta" value="REALIZAR FACTURA" onclick="totalfactura() ">
-  	</div>
+  	<div id="pielicores" data-role="footer" data-position="fixed" align="center">
+			<div data-role="controlgroup" data-theme="b" data-type="horizontal">
+						<a href="#paginalicores" class="ui-btn" data-role="button">Atrás</a>						
+					    <a href="#menu" class="ui-btn">Menú</a>			      
+					    <a href="#" class="ui-btn" onclick="totalfactura()">Guardar</a>
+			</div>
+	</div>
 </div><!-- fin de pagína factura-->
 
 </body>
